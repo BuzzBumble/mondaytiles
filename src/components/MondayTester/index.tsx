@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import mondaySdk from 'monday-sdk-js';
 import {BoardsProvider} from 'contexts/boardsContext';
 import AttentionBox from 'components/AttentionBox';
