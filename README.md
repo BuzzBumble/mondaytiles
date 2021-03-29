@@ -4,7 +4,7 @@ For the [Monday Apps Challenge ](https://mondayappsteams.devpost.com/ "Monday Ap
 *This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).*
 
 ## Basic Setup
-Clone and install
+1. Clone and install
 ```
 $ git clone git@github.com:BuzzBumble/mondaytiles.git
 $ cd mondaytiles
@@ -38,12 +38,8 @@ Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 ## Environment Variables
-`.env` can be created to add environment variables
-* Prefix variable name with `REACT_APP_` to use within the app
+`.env` contains all general NON-SECRET environment variables (PORT, BROWSER, etc)
 
-**Variables currently in use:**
-```
-BROWSER=none // Prevents opening a new window/tab in browser when server starts
-REACT_APP_API_TOKEN=[token] // For querying the API outside of the live preview
-EXTEND_ESLINT=true // Tells create-react-app to let us extend the eslint config
-```
+**Create a local `.env.development` file to override values or add new variables.**
+
+Other `.env.*` files can be used locally. Check the `.gitignore` for files that will be ignored automatically or reference [create-react-app custom environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used "create-react-app custom environment variables")
