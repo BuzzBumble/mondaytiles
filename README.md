@@ -24,6 +24,7 @@ Runs the app in the development mode and exposes an ngrok URL.
 ### `npm run local`
 
 Runs server locally without `ngrok`
+
 You can manually run ngrok with `ngrok http 8301`
 
 ### `npm test`
@@ -40,6 +41,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 ## Environment Variables
 `.env` contains all general NON-SECRET environment variables (PORT, BROWSER, etc)
 
-**Create a local `.env.development` file to override values or add new variables.**
+**Create a local `.env.*.local` file to override values or add new variables. eg. `.env.development.local`**
 
 Other `.env.*` files can be used locally. Check the `.gitignore` for files that will be ignored automatically or reference [create-react-app custom environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used "create-react-app custom environment variables")

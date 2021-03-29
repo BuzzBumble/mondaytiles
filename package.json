@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "local": "npm run stop && concurrently \"npm run server\"",
     "build": "react-scripts build",
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040",
     "test": "react-scripts test",
