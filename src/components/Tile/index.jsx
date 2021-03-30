@@ -1,10 +1,6 @@
 import './Tile.css';
 
-const Tile = (props: {
-  weight: number,
-  color?: string,
-  name?: string
-}) => {
+const Tile = (props) => {
   const style = {
     width: props.weight,
     height: props.weight,
@@ -12,7 +8,7 @@ const Tile = (props: {
 
   return (
     <div style={style} className="tile">
-      <p>{props.name}</p>
+      <p>{props.name}:{props.value}</p>
     </div>
   );
 };

@@ -4,18 +4,19 @@ import { MondayContext } from 'contexts/mondayContext';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 
-const MondayTester = () => {
+const MondayTester = (props) => {
   const board = useContext(BoardContext);
+  const settings = useContext(SettingsContext);
 
-  if (board) {
-    const boards = board?.items.map((item) => {
+  if (settings.column_id) {
+    const tiles = board?.items?.map((item) => {
       let name = item.name;
       if (name.length > 15) name = name?.substr(0, 15) + "...";
-      return <Tile weight={100} name={name}/>
+      return <Tile weight={100} name={item.name} value={item.values.numbers}/>
     });
     return (
       <div>
-        {boards}
+        {tiles}
       </div>
     )
   } else {

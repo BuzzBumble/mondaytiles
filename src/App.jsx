@@ -4,22 +4,22 @@ import { useEffect, useState } from 'react';
 import { MondayProvider } from 'contexts/mondayContext';
 import { SettingsProvider } from 'contexts/settingsContext';
 import { BoardProvider } from 'contexts/boardsContext';
-import { getItemsForBoard } from 'queries';
+import { getBoard } from 'queries';
 import MondayTester from 'components/MondayTester';
 import mondaySdk from 'monday-sdk-js';
-import { Monday } from 'types/monday';
+import { mapBoard } from 'helpers/mapMondayObjects';
 
 const monday = mondaySdk();
 const token = process.env.REACT_APP_API_TOKEN;
 monday.setToken(token);
 
 function App() {
-  const [context, setContext] = useState<Monday.Context | undefined>();
+  const [context, setContext] = useState({});
   const [settings, setSettings] = useState({});
-  const [board, setBoard] = useState<Monday.Board | undefined>();
+  const [board, setBoard] = useState({});
 
   useEffect(() => {
-    monday.listen(["settings", "context"], (res: any) => {
+    monday.listen(["settings", "context"], (res) => {
       if (res.type === "context") {
         setContext(res.data);
       }
@@ -30,16 +30,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (context) {
-      monday.api(getItemsForBoard(context.boardIds[0])).then((res:any) => {
-        setBoard(res.data.boards[0]);
+    if (context.boardIds && settings.column_id) {
+      console.log(settings);
+      getBoard(context.boardIds[0]).then((res) => {
+        let b = mapBoard(res.data.boards[0]);
+        setBoard(b);
       });
     }
-  }, [context]);
-
-  useEffect(() => {
-    console.log(board);
-  }, [board]);
+  }, [context, settings]);
 
   return (
     <div className="App">
