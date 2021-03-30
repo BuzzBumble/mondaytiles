@@ -1,39 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import mondaySdk from 'monday-sdk-js';
-import {BoardsProvider} from 'contexts/boardsContext';
-import AttentionBox from 'components/AttentionBox';
-
-const monday = mondaySdk();
-const token = process.env.REACT_APP_API_TOKEN;
-monday.setToken(token);
+import { useContext } from 'react';
+import Tile from 'components/Tile';
+import { MondayContext } from 'contexts/mondayContext';
+import { SettingsContext } from 'contexts/settingsContext';
+import { BoardContext } from 'contexts/boardsContext';
 
 const MondayTester = () => {
-  const [boards, setBoards] = useState([]);
+  const board = useContext(BoardContext);
 
-  // useEffect(() => {
-  //   const query: string = `
-  //   query {
-  //     boards {
-  //       id
-  //       name
-  //       items {
-  //         name
-  //       }
-  //     }
-  //   }
-  //   `
-  //   monday.api(query).then((res: any) => {
-  //     setBoards(res.data.boards);
-  //   });
-  // }, []);
+  if (board) {
+    const boards = board?.items.map((item) => {
+      let name = item.name;
+      if (name.length > 15) name = name?.substr(0, 15) + "...";
+      return <Tile weight={100} name={name}/>
+    });
+    return (
+      <div>
+        {boards}
+      </div>
+    )
+  } else {
+    return (
+      <div>No Items</div>
+    )
+  }
 
-  return (
-    <div>
-      <BoardsProvider value={boards}>
-        <AttentionBox/>
-      </BoardsProvider>
-    </div>
-  )
 };
 
 export default MondayTester;

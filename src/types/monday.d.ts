@@ -1,43 +1,66 @@
 import { group } from "node:console";
 
-interface Item {
-  id?: String;
-  board?: Board;
-  column_values?: ColumnValue;
-  created_at?: String;
-  updated_at?: String;
-  creator?: User;
-  creator_id?: String;
-  group: Group;
-  name?: String;
-  State?: "all" | "active" | "archived" | "deleted";
-}
+declare namespace Monday {
+  export interface ColumnValue {
+    id?: string;
+    text?: string;
+    title?: string;
+    type?: string;
+    value?: string;
+    additional_info?: string;
+  }
 
-interface Group {
-  id?: String;
-  archived?: Boolean;
-  color?: String;
-  deleted?: Boolean;
-  items?: [Item];
-  position?: String;
-  title?: String;
-}
+  export interface Item {
+    id?: string;
+    board?: Board;
+    column_values?: [ColumnValue];
+    created_at?: string;
+    updated_at?: string;
+    creator?: User;
+    creator_id?: string;
+    group: Group;
+    name: string;
+    State?: "all" | "active" | "archived" | "deleted";
+  }
 
-interface BoardColumn {
-  id?: String;
-  archived?: Boolean;
-  pos?: String;
-  settings_str?: String;
-  title?: String;
-  type?: String;
-  width?: Number
-}
+  export interface Group {
+    id?: string;
+    archived?: boolean;
+    color?: string;
+    deleted?: boolean;
+    items?: [Item];
+    position?: string;
+    title?: string;
+  }
 
-interface Board {
-  board_folder_id?: Number;
-  board_kind?: String;
-  columns?: [BoardColumn];
-  communication?: Object;
-  description?: String;
-  groups?: [Group];
+  export interface BoardColumn {
+    id?: string;
+    archived?: boolean;
+    pos?: string;
+    settings_str?: string;
+    title?: string;
+    type?: string;
+    width?: number;
+  }
+
+  export interface Board {
+    board_folder_id?: string;
+    board_kind?: string;
+    columns?: [BoardColumn];
+    communication?: Object;
+    description?: string;
+    groups?: [Group];
+    items: [Item];
+  }
+
+  export interface Context {
+    boardIds: [number],
+    editMode: boolean,
+    instanceId: number,
+    instanceType: string,
+    itemIds: [number] | undefined,
+    theme: string,
+    user: Object,
+    viewMode: string
+  }
 }
