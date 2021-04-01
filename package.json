@@ -13,6 +13,7 @@
     "@types/react-dom": "^17.0.3",
     "monday-sdk-js": "^0.1.2",
     "monday-ui-react-core": "0.0.111",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3"

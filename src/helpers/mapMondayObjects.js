@@ -17,8 +17,14 @@ export const mapBoard = (board) => {
   return b;
 }
 
+// Monday Settings object
+// column_id: id of the column selected
 export const mapSettings = (settings) => {
-  // TODO
+  let s = {
+    "column_id": Object.keys(settings.column_id)[0]
+  };
+
+  return s;
 };
 
 function isAcceptedType (type) {

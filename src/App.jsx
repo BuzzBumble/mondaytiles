@@ -5,9 +5,9 @@ import { MondayProvider } from 'contexts/mondayContext';
 import { SettingsProvider } from 'contexts/settingsContext';
 import { BoardProvider } from 'contexts/boardsContext';
 import { getBoard } from 'queries';
-import MondayTester from 'components/MondayTester';
+import MondayTester from 'components/TileMap';
 import mondaySdk from 'monday-sdk-js';
-import { mapBoard } from 'helpers/mapMondayObjects';
+import { mapBoard, mapSettings } from 'helpers/mapMondayObjects';
 
 const monday = mondaySdk();
 const token = process.env.REACT_APP_API_TOKEN;
@@ -31,13 +31,17 @@ function App() {
 
   useEffect(() => {
     if (context.boardIds && settings.column_id) {
-      console.log(settings);
+      console.log(mapSettings(settings));
       getBoard(context.boardIds[0]).then((res) => {
         let b = mapBoard(res.data.boards[0]);
         setBoard(b);
       });
     }
   }, [context, settings]);
+
+  useEffect(() => {
+    console.log(context);
+  }, [context]);
 
   return (
     <div className="App">
