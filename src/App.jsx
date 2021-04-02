@@ -22,13 +22,9 @@ function App() {
   useEffect(() => {
     monday.listen(["settings", "context"], (res) => {
       if (res.type === "context") {
-        console.log("Context");
-        console.log(res.data);
         setContext(res.data);
       }
       if (res.type === "settings") {
-        console.log("Settings");
-        console.log(res.data);
         setSettings(mapSettings(res.data));
       }
     });
@@ -45,9 +41,9 @@ function App() {
     }
   }, [context, settings]);
 
-  useEffect(() => {
-    console.log(settings);
-  }, [settings]);
+  // useEffect(() => {
+  //   console.log(board);
+  // }, [board]);
 
   return (
     <div className="App">

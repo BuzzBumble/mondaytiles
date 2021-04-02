@@ -12,7 +12,7 @@ export const mapBoard = (board) => {
     }
   });
 
-  b.items = itemsByColumn(board.items);
+  b.groups = itemsByGroup(board.items);
   
   return b;
 }
@@ -35,29 +35,51 @@ function isAcceptedType (type) {
   return acceptedTypes.includes(type);
 }
 
-function itemsByColumn(items) {
-  let data = [];
-
+function itemsByGroup(items) {
+  const groups = [];
+  
   items.forEach((item) => {
-    const itemObj = {
-      id: item.id,
-      name: item.name,
-      values: {}
-    };
-    item.column_values.forEach((cv) => {
-      if (isAcceptedType(cv.type)) {
-        switch (cv.type) {
-          case "numeric":
-            itemObj.values[cv.id] = parseInt(cv.text);
-            break;
-          default:
-            itemObj.values[cv.id] = cv.text;
+      let found = false;
+      const itemObj = mapItem(item);
+      for (let i = 0; i < groups.length; i++) {
+        if (groups[i].id === item.group.id) {
+          groups[i].items.push(itemObj);
+          for (let [k, v] of Object.entries(itemObj.values)) {
+            groups[i].values[k] += v;
+          }
+          found = true;
         }
       }
-    });
+      if (!found) {
+        groups.push({
+          id: item.group.id,
+          title: item.group.title,
+          values: Object.assign({}, itemObj.values),
+          items: [itemObj]
+        });
+      }
+  });
+  
+  return groups;
+}
 
-    data.push(itemObj);
+function mapItem(item) {
+  const itemObj = {
+    id: item.id,
+    name: item.name,
+    values: {}
+  };
+  item.column_values.forEach((cv) => {
+    if (isAcceptedType(cv.type)) {
+      switch (cv.type) {
+        case "numeric":
+          itemObj.values[cv.id] = parseInt(cv.text);
+          break;
+        default:
+          itemObj.values[cv.id] = cv.text;
+      }
+    }
   });
 
-  return data;
+  return itemObj;
 }

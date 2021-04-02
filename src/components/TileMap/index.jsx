@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 import { shortName } from 'helpers/util';
-import { boardToTileMap } from 'helpers/tileMap';
+import { boardToTileMap, groupTileMap } from 'helpers/tileMap';
 // import PropTypes from 'prop-types';
 
 import Tile from 'components/Tile';
@@ -14,15 +14,17 @@ const TileMap = () => {
   const [tileData, setTileData] = useState({});
 
   useEffect(() => {
-    if (board.items) {
-      setTileData(boardToTileMap(board.items, settings.weight_column_id));
+    if (Object.keys(board).length > 0) {
+      const gtm = groupTileMap(board, settings.weight_column_id)
+      console.log(gtm);
+      setTileData(gtm);
     }
   }, [board, settings]);
 
-  useEffect(() => {
-    console.log("Tile Data");
-    console.log(tileData);
-  }, [tileData]);
+  // useEffect(() => {
+  //   console.log("Tile Data");
+  //   console.log(tileData);
+  // }, [tileData]);
 
   if (tileData.tiles) {
     const tiles = tileData.tiles.map((tile) => {

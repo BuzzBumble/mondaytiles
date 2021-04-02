@@ -19,6 +19,10 @@ export const getBoard = (id) => {
             title
             text
           }
+          group {
+            id
+            title
+          }
         }
       }
     }
