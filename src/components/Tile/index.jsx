@@ -2,14 +2,17 @@ import './Tile.css';
 import PropTypes from 'prop-types';
 
 const Tile = (props) => {
+  // TODO: Figure out weight -> size calculation
   const style = {
-    width: props.weight,
-    height: props.weight,
+    width: 100,
+    height: 100,
   }
 
   return (
     <div style={style} className="tile">
-      <p>{props.name}:{props.value}</p>
+      <p>Name: {props.name}</p>
+      <p>Value: {props.value}</p>
+      <p>Weight: {Math.round(props.weight * 100)}</p>
     </div>
   );
 };
@@ -20,4 +23,4 @@ Tile.propTypes = {
   value: PropTypes.number.isRequired
 };
 
-export default Tile
+export default Tile;

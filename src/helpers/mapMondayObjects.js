@@ -20,8 +20,12 @@ export const mapBoard = (board) => {
 // Monday Settings object
 // column_id: id of the column selected
 export const mapSettings = (settings) => {
+
+  const group_column_id = settings.group_column_id ? Object.keys(settings.group_column_id)[0] : null;
+  const weight_column_id = settings.weight_column_id ? Object.keys(settings.weight_column_id)[0] : null;
   let s = {
-    "column_id": Object.keys(settings.column_id)[0]
+    group_column_id,
+    weight_column_id
   };
 
   return s;
@@ -42,7 +46,13 @@ function itemsByColumn(items) {
     };
     item.column_values.forEach((cv) => {
       if (isAcceptedType(cv.type)) {
-        itemObj.values[cv.id] = cv.text;
+        switch (cv.type) {
+          case "numeric":
+            itemObj.values[cv.id] = parseInt(cv.text);
+            break;
+          default:
+            itemObj.values[cv.id] = cv.text;
+        }
       }
     });
 

@@ -5,7 +5,7 @@ import { MondayProvider } from 'contexts/mondayContext';
 import { SettingsProvider } from 'contexts/settingsContext';
 import { BoardProvider } from 'contexts/boardsContext';
 import { getBoard } from 'queries';
-import MondayTester from 'components/TileMap';
+import TileMap from 'components/TileMap';
 import mondaySdk from 'monday-sdk-js';
 import { mapBoard, mapSettings } from 'helpers/mapMondayObjects';
 
@@ -18,21 +18,27 @@ function App() {
   const [settings, setSettings] = useState({});
   const [board, setBoard] = useState({});
 
+  // On initial render, set monday listener for context and settings
   useEffect(() => {
     monday.listen(["settings", "context"], (res) => {
       if (res.type === "context") {
+        console.log("Context");
+        console.log(res.data);
         setContext(res.data);
       }
       if (res.type === "settings") {
-        setSettings(res.data);
+        console.log("Settings");
+        console.log(res.data);
+        setSettings(mapSettings(res.data));
       }
     });
   }, []);
 
+  // When context or settings change, remap board
   useEffect(() => {
-    if (context.boardIds && settings.column_id) {
-      console.log(mapSettings(settings));
-      getBoard(context.boardIds[0]).then((res) => {
+    if (context.boardIds && settings.weight_column_id) {
+      const board_id = context.boardIds[0];
+      getBoard(board_id).then((res) => {
         let b = mapBoard(res.data.boards[0]);
         setBoard(b);
       });
@@ -40,15 +46,15 @@ function App() {
   }, [context, settings]);
 
   useEffect(() => {
-    console.log(context);
-  }, [context]);
+    console.log(settings);
+  }, [settings]);
 
   return (
     <div className="App">
       <SettingsProvider value={settings}>
         <MondayProvider value={context}>
           <BoardProvider value={board}>
-            <MondayTester/>
+            <TileMap/>
           </BoardProvider>
         </MondayProvider>
       </SettingsProvider>

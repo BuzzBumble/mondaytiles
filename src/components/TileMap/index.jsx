@@ -1,27 +1,43 @@
-import { useContext } from 'react';
-import Tile from 'components/Tile';
+import './TileMap.css';
+import { useContext, useEffect, useState } from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 import { shortName } from 'helpers/util';
+import { boardToTileMap } from 'helpers/tileMap';
 // import PropTypes from 'prop-types';
+
+import Tile from 'components/Tile';
 
 const TileMap = () => {
   const board = useContext(BoardContext);
   const settings = useContext(SettingsContext);
+  const [tileData, setTileData] = useState({});
 
-  if (settings.column_id) {
-    const tiles = board?.items?.map((item) => {
-      let name = shortName(item.name);
+  useEffect(() => {
+    if (board.items) {
+      setTileData(boardToTileMap(board.items, settings.weight_column_id));
+    }
+  }, [board, settings]);
+
+  useEffect(() => {
+    console.log("Tile Data");
+    console.log(tileData);
+  }, [tileData]);
+
+  if (tileData.tiles) {
+    const tiles = tileData.tiles.map((tile) => {
+      const name = shortName(tile.name);
+      const weight = tile.value / tileData.total;
       return (
         <Tile
-          weight={100}
+          weight={weight}
           name={name}
-          value={item.values.numbers}
+          value={tile.value}
          />
       );
     });
     return (
-      <div>
+      <div className="tilemap">
         {tiles}
       </div>
     )
