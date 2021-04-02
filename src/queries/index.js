@@ -14,8 +14,8 @@ export const getBoard = (id) => {
           id
           name
           column_values {
-            type
             id
+            type
             title
             text
           }

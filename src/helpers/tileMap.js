@@ -1,26 +1,7 @@
 import Tile from 'classes/Tile';
 
-export const itemTileMap = (items, weight_column_id) => { 
-  let tm = {
-    total: 0,
-    tiles: []
-  }
-
-  items.forEach((item) => {
-    const tile = new Tile(item.id, item.name, item.values[weight_column_id]);
-
-    tm.tiles.push(tile);
-    tm.total += tile.value;
-  });
-
-  return tm;
-}
-
-export const groupTileMap = (board, weight_column_id) => {
-  let tm = {
-    total: 0,
-    tiles: [],
-  }
+export const newTileTree = (board, weight_column_id, group_column_id) => {
+  let tree = new Tile("Root", "Root", 0);
 
   board.groups.forEach((group) => {
     const sum = group.items.reduce((sum, item) => {
@@ -29,15 +10,27 @@ export const groupTileMap = (board, weight_column_id) => {
 
     const tile = new Tile(group.id, group.title, sum);
 
-    group.items.forEach((item) => {
-      const itile = new Tile(item.id, item.name, item.values[weight_column_id]);
+    const categoryTiles = {}
+    for (let [k, v] of Object.entries(group.values)) {
+      categoryTiles[k] = new Tile(group.id + "-" + k + ":" + v, k, v);
+    }
 
-      tile.addChild(itile);
+    group.items.forEach((item) => {
+      const category = item.values[group_column_id];
+      const itemTile = new Tile(item.id, item.name, item.values[weight_column_id]);
+
+      categoryTiles[category].addChild(itemTile);
     });
 
-    tm.tiles.push(tile);
-    tm.total += tile.value;
+    console.log(categoryTiles);
+
+    for (let v of Object.values(categoryTiles)) {
+      tile.addChild(v);
+    }
+
+    tree.addChild(tile);
+    tree.total += tile.value;
   });
 
-  return tm;
+  return tree;
 };

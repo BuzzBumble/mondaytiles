@@ -1,5 +1,7 @@
 export const acceptedTypes = [
   "numeric",
+  "multiple-person",
+  "color"
 ]
 
 export const mapBoard = (board) => {
@@ -37,6 +39,7 @@ function isAcceptedType (type) {
 
 function itemsByGroup(items) {
   const groups = [];
+
   
   items.forEach((item) => {
       let found = false;
@@ -45,20 +48,36 @@ function itemsByGroup(items) {
         if (groups[i].id === item.group.id) {
           groups[i].items.push(itemObj);
           for (let [k, v] of Object.entries(itemObj.values)) {
-            groups[i].values[k] += v;
+            if (v.numeric) {
+              groups[i].values[k].value += v.value;
+            } else if (!groups[i].values[k].value.includes(v.value)) {
+              groups[i].values[k].value.push(v.value);
+            }
           }
           found = true;
         }
       }
       if (!found) {
+        let obj = {};
+        for (let [k, v] of Object.entries(itemObj.values)) {
+          if (obj[k] === undefined) {
+            obj[k] = {
+              numeric: v.numeric,
+              title: v.title,
+              value: v.numeric ? v.value : [v.value]
+            }
+          }
+        }
         groups.push({
           id: item.group.id,
           title: item.group.title,
-          values: Object.assign({}, itemObj.values),
+          values: obj,
           items: [itemObj]
         });
       }
   });
+
+  console.log(groups);
   
   return groups;
 }
@@ -73,10 +92,18 @@ function mapItem(item) {
     if (isAcceptedType(cv.type)) {
       switch (cv.type) {
         case "numeric":
-          itemObj.values[cv.id] = parseInt(cv.text);
+          itemObj.values[cv.id] = {
+            numeric: true,
+            title: cv.title,
+            value: parseInt(cv.text)
+          }
           break;
         default:
-          itemObj.values[cv.id] = cv.text;
+          itemObj.values[cv.id] = {
+            numeric: false,
+            title: cv.title,
+            value: cv.text
+          }
       }
     }
   });
