@@ -1,3 +1,4 @@
+// Tile Class
 export default class Tile {
   constructor(id, name, value) {
     this.id = id;
@@ -23,7 +24,7 @@ export default class Tile {
     });
   }
 
-  getWeight(i) {
+  getWeightOfChild(i) {
     return this.children[i].value / i;
   }
 
@@ -38,7 +39,7 @@ export default class Tile {
     return this.value;
   }
 
-  sortTiles() {
+  sortChildren() {
     if (this.children.length < 2) {
       return;
     }

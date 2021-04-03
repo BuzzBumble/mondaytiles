@@ -12,7 +12,7 @@ export const newTileTree = (board, weight_column_id, group_column_id) => {
 
     const categoryTiles = {}
     for (let [k, v] of Object.entries(group.values)) {
-      categoryTiles[k] = new Tile(group.id + "-" + k + ":" + v, k, v);
+      categoryTiles[k] = new Tile(group.id + "-" + k + ":" + v, v, v);
     }
 
     group.items.forEach((item) => {
@@ -21,8 +21,6 @@ export const newTileTree = (board, weight_column_id, group_column_id) => {
 
       categoryTiles[category].addChild(itemTile);
     });
-
-    console.log(categoryTiles);
 
     for (let v of Object.values(categoryTiles)) {
       tile.addChild(v);

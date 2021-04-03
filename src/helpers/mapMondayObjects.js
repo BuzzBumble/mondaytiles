@@ -39,7 +39,6 @@ function isAcceptedType (type) {
 
 function itemsByGroup(items) {
   const groups = [];
-
   
   items.forEach((item) => {
       let found = false;
@@ -77,8 +76,6 @@ function itemsByGroup(items) {
       }
   });
 
-  console.log(groups);
-  
   return groups;
 }
 
