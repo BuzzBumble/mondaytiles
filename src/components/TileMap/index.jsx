@@ -8,6 +8,11 @@ import { newTileTree } from 'helpers/tileMap';
 
 import Tile from 'components/Tile';
 
+// TODO:
+// Extract the board-specific stuff into a new component
+// Make the TileMap component reusable
+// Make the Tiles stay within the TileMap
+
 const TileMap = () => {
   const board = useContext(BoardContext);
   const settings = useContext(SettingsContext);
@@ -15,26 +20,21 @@ const TileMap = () => {
 
   useEffect(() => {
     if (Object.keys(board).length > 0) {
-      const tree = newTileTree(board, settings.weight_column_id)
-      console.log(tree);
+      const tree = newTileTree(board, settings.weight_column_id, settings.group_column_id)
       setTileData(tree);
     }
   }, [board, settings]);
 
-  // useEffect(() => {
-  //   console.log("Tile Data");
-  //   console.log(tileData);
-  // }, [tileData]);
-
-  if (tileData.tiles) {
-    const tiles = tileData.tiles.map((tile) => {
+  if (tileData.children) {
+    const tiles = tileData.children.map((tile) => {
       const name = shortName(tile.name);
-      const weight = tile.value / tileData.total;
+      const weight = tile.value / tileData.value;
       return (
         <Tile
           weight={weight}
           name={name}
           value={tile.value}
+          children={tile.children}
          />
       );
     });

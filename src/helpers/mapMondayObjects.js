@@ -46,31 +46,13 @@ function itemsByGroup(items) {
       for (let i = 0; i < groups.length; i++) {
         if (groups[i].id === item.group.id) {
           groups[i].items.push(itemObj);
-          for (let [k, v] of Object.entries(itemObj.values)) {
-            if (v.numeric) {
-              groups[i].values[k].value += v.value;
-            } else if (!groups[i].values[k].value.includes(v.value)) {
-              groups[i].values[k].value.push(v.value);
-            }
-          }
           found = true;
         }
       }
       if (!found) {
-        let obj = {};
-        for (let [k, v] of Object.entries(itemObj.values)) {
-          if (obj[k] === undefined) {
-            obj[k] = {
-              numeric: v.numeric,
-              title: v.title,
-              value: v.numeric ? v.value : [v.value]
-            }
-          }
-        }
         groups.push({
           id: item.group.id,
           title: item.group.title,
-          values: obj,
           items: [itemObj]
         });
       }

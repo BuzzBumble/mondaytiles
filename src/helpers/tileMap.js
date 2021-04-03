@@ -5,29 +5,33 @@ export const newTileTree = (board, weight_column_id, group_column_id) => {
 
   board.groups.forEach((group) => {
     const sum = group.items.reduce((sum, item) => {
-      return sum + item.values[weight_column_id];
+      return sum + item.values[weight_column_id].value;
     }, 0);
 
-    const tile = new Tile(group.id, group.title, sum);
+    const groupTile = new Tile(group.id, group.title, sum);
 
-    const categoryTiles = {}
-    for (let [k, v] of Object.entries(group.values)) {
-      categoryTiles[k] = new Tile(group.id + "-" + k + ":" + v, v, v);
-    }
-
+    const categories = {};
     group.items.forEach((item) => {
-      const category = item.values[group_column_id];
-      const itemTile = new Tile(item.id, item.name, item.values[weight_column_id]);
+      let item_value = item.values[group_column_id].value;
+      if (item_value === "") item_value = "None";
+      const item_weight_value = item.values[weight_column_id].value;
+      const category_id = group.id + '-' + item_value;
+      const item_exists = Object.keys(categories).includes(item_value);
+      if (!item_exists) {
+        const categoryTile = new Tile(
+          category_id,
+          item_value,
+          0
+        );
+        categories[item_value] = categoryTile;
+      }
 
-      categoryTiles[category].addChild(itemTile);
+      const itemTile = new Tile(item.id, item.name, item_weight_value);
+      categories[item_value].addChild(itemTile);
     });
 
-    for (let v of Object.values(categoryTiles)) {
-      tile.addChild(v);
-    }
-
-    tree.addChild(tile);
-    tree.total += tile.value;
+    groupTile.addChildren(Object.values(categories));
+    tree.addChild(groupTile);
   });
 
   return tree;
