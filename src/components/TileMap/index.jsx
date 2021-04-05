@@ -1,7 +1,5 @@
 import './TileMap.css';
-
 import { useContext, useEffect, useState } from 'react';
-
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 
@@ -16,7 +14,7 @@ import GroupTile from 'components/GroupTile';
 const TileMap = () => {
   const board = useContext(BoardContext);
   const settings = useContext(SettingsContext);
-  const [tileData, setTileData] = useState({});
+  const [tileData, setTileData] = useState(undefined);
 
   useEffect(() => {
     if (Object.keys(board).length > 0) {
@@ -29,7 +27,7 @@ const TileMap = () => {
     }
   }, [board, settings]);
 
-  if (tileData.children) {
+  if (tileData && tileData.children) {
     const tiles = tileData.children.map(tile => {
       return (
         <GroupTile

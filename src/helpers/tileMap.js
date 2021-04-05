@@ -31,5 +31,6 @@ export const newTileTree = (board, weight_column_id, group_column_id) => {
   });
 
   tree.calcChildrenWeights();
+  tree.sortChildren();
   return tree;
 };

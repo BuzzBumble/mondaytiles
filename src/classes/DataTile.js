@@ -9,13 +9,7 @@ export default class DataTile {
   }
 
   addChild(tile) {
-    if (this.children.length !== 0 &&
-    tile.value < this.children[0].value )
-    {
-      this.children.unshift(tile)
-    } else {
-      this.children.push(tile);
-    }
+    this.children.push(tile);
     this.value += tile.value;
   }
 
@@ -51,17 +45,21 @@ export default class DataTile {
     return this.value;
   }
 
-  sortChildren() {
+  sortChildren(asc=false) {
     if (this.children.length < 2) {
       return;
     }
 
     this.children.sort((a, b) => {
-      return a.value - b.value;
+      if (asc) {
+        return a.value - b.value;
+      } else {
+        return b.value - a.value;
+      }
     });
 
     this.children.forEach((child) => {
-      child.sortTiles();
+      child.sortChildren(asc);
     });
   }
 }

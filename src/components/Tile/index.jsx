@@ -11,7 +11,7 @@ const Tile = props => {
     height: 200,
   };
 
-  const roundedWeight = Math.round(props.weight * 100);
+  const roundedWeight = Math.round(props.weight * 100000) / 1000;
 
   return (
     <div style={style} className="tile" onClick={props.onClick}>

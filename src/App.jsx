@@ -27,6 +27,8 @@ function App() {
         setSettings(mapSettings(res.data));
       }
     });
+
+    console.log(window.innerWidth, window.innerHeight);
   }, []);
 
   // When context or settings change, remap board
