@@ -1,6 +1,8 @@
 import mondaySdk from 'monday-sdk-js';
 
 const monday = mondaySdk();
+const token = process.env.REACT_APP_API_TOKEN;
+monday.setToken(token);
 
 export const getBoard = (id) => {
   let query = `

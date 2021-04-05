@@ -28,10 +28,6 @@ const TileMap = () => {
     }
   }, [board, settings]);
 
-  useEffect(() => {
-    console.log(tileData);
-  }, [tileData]);
-
   if (tileData.children) {
     const tiles = tileData.children.map(tile => {
       const name = shortName(tile.name);

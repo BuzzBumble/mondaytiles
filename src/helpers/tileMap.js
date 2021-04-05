@@ -4,11 +4,7 @@ export const newTileTree = (board, weight_column_id, group_column_id) => {
   let tree = new DataTile("Root", "Root", 0);
 
   board.groups.forEach((group) => {
-    const sum = group.items.reduce((sum, item) => {
-      return sum + item.values[weight_column_id].value;
-    }, 0);
-
-    const groupTile = new DataTile(group.id, group.title, sum);
+    const groupTile = new DataTile(group.id, group.title, 0);
 
     const categories = {};
     group.items.forEach((item) => {

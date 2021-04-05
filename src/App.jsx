@@ -8,14 +8,13 @@ import { getBoard } from 'queries';
 import TileMap from 'components/TileMap';
 import mondaySdk from 'monday-sdk-js';
 import { mapBoard, mapSettings } from 'helpers/mapMondayObjects';
+import { devSettings, devContext } from 'helpers/dev';
 
 const monday = mondaySdk();
-const token = process.env.REACT_APP_API_TOKEN;
-monday.setToken(token);
 
 function App() {
-  const [context, setContext] = useState({});
-  const [settings, setSettings] = useState({});
+  const [context, setContext] = useState(devContext);
+  const [settings, setSettings] = useState(devSettings);
   const [board, setBoard] = useState({});
 
   // On initial render, set monday listener for context and settings
@@ -41,9 +40,13 @@ function App() {
     }
   }, [context, settings]);
 
-  useEffect(() => {
-    console.log(context);
-  }, [context]);
+  // useEffect(() => {
+  //   console.log(context);
+  // }, [context]);
+
+  // useEffect(() => {
+  //   console.log(settings);
+  // }, [settings]);
 
   return (
     <div className="App">
