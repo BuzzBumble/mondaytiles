@@ -1,18 +1,14 @@
 import './ItemTile.css';
 import PropTypes from 'prop-types';
+import Tile from 'components/Tile';
 
 const ItemTile = props => {
-  const style = {
-    width: 200,
-    height: 200,
-  };
-
   return (
-    <div style={style} className="tile">
-      <p>Name: {props.name}</p>
-      <p>Value: {props.value}</p>
-      <p>Weight: {Math.round(props.weight * 100)}</p>
-    </div>
+    <Tile
+      name={props.name}
+      value={props.value}
+      weight={props.weight}
+    />
   );
 };
 

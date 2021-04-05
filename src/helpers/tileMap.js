@@ -30,5 +30,6 @@ export const newTileTree = (board, weight_column_id, group_column_id) => {
     tree.addChild(groupTile);
   });
 
+  tree.calcChildrenWeights();
   return tree;
 };

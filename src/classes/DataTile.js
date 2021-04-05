@@ -4,6 +4,7 @@ export default class DataTile {
     this.id = id;
     this.name = name;
     this.value = value;
+    this.weight = 0;
     this.children = [];
   }
 
@@ -21,6 +22,17 @@ export default class DataTile {
   addChildren(tiles) {
     tiles.forEach((tile) => {
       this.addChild(tile);
+    });
+  }
+
+  calcChildrenWeights() {
+    if (this.children.length === 0) {
+      return;
+    }
+
+    this.children.forEach((child) => {
+      child.calcChildrenWeights();
+      child.weight = child.value / this.value;
     });
   }
 
