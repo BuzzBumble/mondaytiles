@@ -33,6 +33,7 @@ const TileMap = () => {
       const weight = tile.value / tileData.value;
       return (
         <Tile
+          key={tile.id}
           weight={weight}
           name={name}
           value={tile.value}
