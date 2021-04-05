@@ -18,6 +18,8 @@ const TileMap = () => {
   const settings = useContext(SettingsContext);
   const [tileData, setTileData] = useState({});
 
+  const id = "tile-root";
+
   useEffect(() => {
     if (Object.keys(board).length > 0) {
       const tree = newTileTree(board, settings.weight_column_id, settings.group_column_id)
@@ -35,6 +37,7 @@ const TileMap = () => {
           name={name}
           value={tile.value}
           children={tile.children}
+          parentId={id}
          />
       );
     });
