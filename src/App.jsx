@@ -40,14 +40,6 @@ function App() {
     }
   }, [context, settings]);
 
-  // useEffect(() => {
-  //   console.log(context);
-  // }, [context]);
-
-  // useEffect(() => {
-  //   console.log(settings);
-  // }, [settings]);
-
   return (
     <div className="App">
       <SettingsProvider value={settings}>

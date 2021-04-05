@@ -1,16 +1,16 @@
 import './GroupTile.css';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+
 import DataTile from 'classes/DataTile';
-import ItemTile from 'components/ItemTile';
-import Tile from 'components/Tile';
 import { shortName } from 'helpers/util';
 
-import { useState } from 'react';
+import ItemTile from 'components/ItemTile';
+import GroupTileHeader from 'components/GroupTileHeader';
+import Tile from 'components/Tile';
 
 // GroupTile component
 // Container for a group of tiles within a TileMap
-//
-// DEPENDENCIES: None
 const GroupTile = props => {
   const [zoomed, setZoomed] = useState(false);
 
@@ -44,7 +44,10 @@ const GroupTile = props => {
     });
     return (
       <div className="grouptile" id={props.id}>
-        <p>{shortName(props.name)}</p>
+        <GroupTileHeader
+          name={props.name}
+          onClick={() => setZoomed(false)}
+        />
         {tiles}
       </div>
     );
