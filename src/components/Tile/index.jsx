@@ -2,6 +2,7 @@ import './Tile.css';
 import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
 import GroupTile from 'components/GroupTile';
+import ItemTile from 'components/ItemTile';
 import DataTile from 'classes/DataTile';
 
 const Tile = props => {
@@ -10,10 +11,6 @@ const Tile = props => {
   const [height, setHeight] = useState(0);
 
   // TODO: Figure out weight -> size calculation
-  const style = {
-    width: 200,
-    height: 200,
-  };
 
   if (zoomed && props.children.length > 0) {
     return (
@@ -29,15 +26,13 @@ const Tile = props => {
     );
   } else {
     return (
-      <div
-        style={style}
-        className="tile"
-        onClick={() => setZoomed(true)}
-      >
-        <p>Name: {props.name}</p>
-        <p>Value: {props.value}</p>
-        <p>Weight: {Math.round(props.weight * 100)}</p>
-      </div>
+      <ItemTile
+        id={props.id}
+        name={props.name}
+        weight={props.weight}
+        value={props.value}
+        parentId={props.parentId}
+      />
     );
   }
 };
