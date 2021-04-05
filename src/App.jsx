@@ -20,11 +20,11 @@ function App() {
 
   // On initial render, set monday listener for context and settings
   useEffect(() => {
-    monday.listen(["settings", "context"], (res) => {
-      if (res.type === "context") {
+    monday.listen(['settings', 'context'], res => {
+      if (res.type === 'context') {
         setContext(res.data);
       }
-      if (res.type === "settings") {
+      if (res.type === 'settings') {
         setSettings(mapSettings(res.data));
       }
     });
@@ -34,23 +34,23 @@ function App() {
   useEffect(() => {
     if (context.boardIds && settings.weight_column_id) {
       const board_id = context.boardIds[0];
-      getBoard(board_id).then((res) => {
+      getBoard(board_id).then(res => {
         let b = mapBoard(res.data.boards[0]);
         setBoard(b);
       });
     }
   }, [context, settings]);
 
-  // useEffect(() => {
-  //   console.log(board);
-  // }, [board]);
+  useEffect(() => {
+    console.log(context);
+  }, [context]);
 
   return (
     <div className="App">
       <SettingsProvider value={settings}>
         <MondayProvider value={context}>
           <BoardProvider value={board}>
-            <TileMap/>
+            <TileMap />
           </BoardProvider>
         </MondayProvider>
       </SettingsProvider>

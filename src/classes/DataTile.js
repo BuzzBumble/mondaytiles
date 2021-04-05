@@ -1,5 +1,5 @@
 // Tile Class
-export default class Tile {
+export default class DataTile {
   constructor(id, name, value) {
     this.id = id;
     this.name = name;
