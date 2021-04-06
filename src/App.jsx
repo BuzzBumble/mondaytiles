@@ -42,6 +42,10 @@ function App() {
     }
   }, [context, settings]);
 
+  useEffect(() => {
+    console.log(board);
+  }, [board]);
+
   return (
     <div className="App">
       <SettingsProvider value={settings}>

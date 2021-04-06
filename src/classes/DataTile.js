@@ -5,12 +5,13 @@ export default class DataTile {
     this.name = name;
     this.value = value;
     this.weight = 0;
-    this.children = [];
+    this.children = []; // Array of Tiles
   }
 
   addChild(tile) {
-    this.children.push(tile);
     this.value += tile.value;
+
+    this.children.push(tile);
   }
 
   addChildren(tiles) {

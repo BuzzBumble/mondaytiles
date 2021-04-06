@@ -27,6 +27,10 @@ const TileMap = () => {
     }
   }, [board, settings]);
 
+  useEffect(() => {
+    console.log(tileData);
+  }, [tileData]);
+
   if (tileData && tileData.children) {
     const tiles = tileData.children.map(tile => {
       return (
