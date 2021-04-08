@@ -1,8 +1,7 @@
 import './GroupTile.css';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import DataTile from 'classes/DataTile';
 import { shortName } from 'helpers/util';
 
 import ItemTile from 'components/ItemTile';

@@ -1,4 +1,4 @@
-import Rectangle, { RectGroup } from "classes/Rectangle";
+import Rectangle from "classes/Rectangle";
 
 // Tile Class
 export default class DataTile {
