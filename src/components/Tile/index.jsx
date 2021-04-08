@@ -6,15 +6,10 @@ import PropTypes from 'prop-types';
 //
 // DEPENDENCIES: []
 const Tile = props => {
-  const style = {
-    width: 200,
-    height: 200,
-  };
-
   const roundedWeight = Math.round(props.weight * 100000) / 1000;
 
   return (
-    <div style={style} className="tile" onClick={props.onClick}>
+    <div style={props.style} className="tile" onClick={props.onClick}>
       <p>Name: {props.name}</p>
       <p>Value: {props.value}</p>
       <p>Weight: {roundedWeight}</p>
@@ -26,6 +21,9 @@ Tile.propTypes = {
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  style: PropTypes.object,
 };
 
 export default Tile;

@@ -19,5 +19,4 @@ ItemTile.propTypes = {
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
-  parentId: PropTypes.string.isRequired,
 };

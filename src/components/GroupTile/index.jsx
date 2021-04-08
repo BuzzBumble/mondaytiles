@@ -1,6 +1,6 @@
 import './GroupTile.css';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import DataTile from 'classes/DataTile';
 import { shortName } from 'helpers/util';
@@ -13,22 +13,20 @@ import Tile from 'components/Tile';
 // Container for a group of tiles within a TileMap
 const GroupTile = props => {
   const [zoomed, setZoomed] = useState(false);
+  const tile = props.tile;
+
+  const style = {
+    left: tile.rect.x1,
+    top: tile.rect.y1,
+    width: tile.rect.getWidth(),
+    height: tile.rect.getHeight(),
+  };
 
   if (zoomed) {
-    const tiles = props.children.map(child => {
+    const tiles = tile.children.map(child => {
       const name = shortName(child.name);
       if (child.children.length > 0) {
-        return (
-          <GroupTile
-            key={child.id}
-            id={child.id}
-            name={name}
-            weight={child.weight}
-            children={child.children}
-            value={child.value}
-            parentId={props.id}
-          />
-        );
+        return <GroupTile key={child.id} tile={child} />;
       } else {
         return (
           <ItemTile
@@ -43,9 +41,9 @@ const GroupTile = props => {
       }
     });
     return (
-      <div className="grouptile" id={props.id}>
+      <div className="grouptile" id={props.id} style={style}>
         <GroupTileHeader
-          name={props.name}
+          name={tile.name}
           onClick={() => setZoomed(false)}
         />
         {tiles}
@@ -54,9 +52,10 @@ const GroupTile = props => {
   } else {
     return (
       <Tile
-        name={shortName(props.name)}
-        value={props.value}
-        weight={props.weight}
+        name={shortName(tile.name)}
+        value={tile.value}
+        weight={tile.weight}
+        style={style}
         onClick={() => setZoomed(true)}
       />
     );
@@ -64,12 +63,7 @@ const GroupTile = props => {
 };
 
 GroupTile.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  weight: PropTypes.number.isRequired,
-  children: PropTypes.arrayOf(PropTypes.instanceOf(DataTile)),
-  unzoom: PropTypes.func,
+  tile: PropTypes.object,
 };
 
 export default GroupTile;

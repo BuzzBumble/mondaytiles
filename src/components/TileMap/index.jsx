@@ -22,28 +22,22 @@ const TileMap = () => {
         board,
         settings.weight_column_id,
         settings.group_column_id,
+        window.innerWidth,
+        window.innerHeight,
       );
+      tree.calcRects();
       setTileData(tree);
     }
   }, [board, settings]);
 
-  useEffect(() => {
-    console.log(tileData);
-  }, [tileData]);
+  // useEffect(() => {
+  //   console.log('tiles changed');
+  //   console.log(tileData);
+  // }, [tileData]);
 
-  if (tileData && tileData.children) {
+  if (tileData && tileData.children.length > 0) {
     const tiles = tileData.children.map(tile => {
-      return (
-        <GroupTile
-          key={tile.id}
-          id={tile.id}
-          weight={tile.weight}
-          name={tile.name}
-          value={tile.value}
-          children={tile.children}
-          parentId={tileData.id}
-        />
-      );
+      return <GroupTile key={tile.id} tile={tile} />;
     });
     return (
       <div className="tilemap" id="tilemap-container">

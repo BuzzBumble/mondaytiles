@@ -1,7 +1,11 @@
 import DataTile from 'classes/DataTile';
+import Rectangle from 'classes/Rectangle';
 
-export const newTileTree = (board, weight_column_id, group_column_id) => {
+export const newTileTree = (board, weight_column_id, group_column_id, width, height) => {
   let tree = new DataTile("Root", "Root", 0);
+  const rect = new Rectangle(0, 0, width, height);
+
+  tree.setRect(rect);
 
   board.groups.forEach((group) => {
     const groupTile = new DataTile(group.id, group.title, 0);
