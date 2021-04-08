@@ -33,6 +33,7 @@ const GroupTile = props => {
             key={child.id}
             id={child.id}
             name={name}
+            tile={child}
             weight={child.weight}
             value={child.value}
             parentId={props.id}
