@@ -25,7 +25,13 @@ const GroupTile = props => {
     const tiles = tile.children.map(child => {
       const name = shortName(child.name);
       if (child.children.length > 0) {
-        return <GroupTile key={child.id} tile={child} />;
+        return (
+          <GroupTile
+            key={child.id}
+            tile={child}
+            groupStyle={props.groupStyle}
+          />
+        );
       } else {
         return (
           <ItemTile
@@ -41,7 +47,11 @@ const GroupTile = props => {
       }
     });
     return (
-      <div className="grouptile" id={props.id} style={style}>
+      <div
+        className="grouptile"
+        id={props.id}
+        style={{ ...style, ...props.groupStyle }}
+      >
         <GroupTileHeader
           name={tile.name}
           onClick={() => setZoomed(false)}
@@ -64,6 +74,7 @@ const GroupTile = props => {
 
 GroupTile.propTypes = {
   tile: PropTypes.object,
+  groupStyle: PropTypes.object,
 };
 
 export default GroupTile;

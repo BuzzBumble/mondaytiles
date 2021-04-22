@@ -27,7 +27,10 @@ function App() {
         setSettings(mapSettings(res.data));
       }
     });
-    if (window.location.hostname === 'localhost') {
+    if (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname.includes('ngrok')
+    ) {
       setContext(devContext);
       setSettings(devSettings);
     }
@@ -36,7 +39,7 @@ function App() {
   // When context or settings change, remap board
   useEffect(() => {
     if (context.boardIds && settings.weight_column_id) {
-      console.log(settings);
+      // console.log(settings);
       const board_id = context.boardIds[0];
       getBoard(board_id).then(res => {
         let b = mapBoard(res.data.boards[0]);
