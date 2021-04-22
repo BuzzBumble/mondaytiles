@@ -63,7 +63,7 @@ export default class DataTile {
     row.recalc(emptyRect.getWidth(), emptyRect.getHeight(), remValue);
     for (tile of this.children) {
       tile.displayRect.addPadding(padding);
-      tile.calcRects();
+      tile.calcRects(padding);
     }
   }
 

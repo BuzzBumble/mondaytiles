@@ -1,6 +1,6 @@
 import './GroupTile.css';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { shortName } from 'helpers/util';
 
@@ -17,15 +17,21 @@ const GroupTile = props => {
   const style = {
     left: tile.rect.x1,
     top: tile.rect.y1,
-    width: tile.rect.getWidth() - 1,
-    height: tile.rect.getHeight() - 1,
+    width: tile.rect.getWidth(),
+    height: tile.rect.getHeight(),
   };
 
   if (zoomed) {
     const tiles = tile.children.map(child => {
       const name = shortName(child.name);
       if (child.children.length > 0) {
-        return <GroupTile key={child.id} tile={child} />;
+        return (
+          <GroupTile
+            key={child.id}
+            tile={child}
+            groupStyle={props.groupStyle}
+          />
+        );
       } else {
         return (
           <ItemTile
@@ -41,7 +47,11 @@ const GroupTile = props => {
       }
     });
     return (
-      <div className="grouptile" id={props.id} style={style}>
+      <div
+        className="grouptile"
+        id={props.id}
+        style={{ ...style, ...props.groupStyle }}
+      >
         <GroupTileHeader
           name={tile.name}
           onClick={() => setZoomed(false)}
@@ -64,6 +74,7 @@ const GroupTile = props => {
 
 GroupTile.propTypes = {
   tile: PropTypes.object,
+  groupStyle: PropTypes.object,
 };
 
 export default GroupTile;
