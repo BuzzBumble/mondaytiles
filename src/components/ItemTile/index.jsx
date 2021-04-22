@@ -3,8 +3,18 @@ import PropTypes from 'prop-types';
 import Tile from 'components/Tile';
 
 const ItemTile = props => {
+  const tile = props.tile;
+
+  const style = {
+    left: tile.rect.x1,
+    top: tile.rect.y1,
+    width: tile.rect.getWidth(),
+    height: tile.rect.getHeight(),
+  };
+
   return (
     <Tile
+      style={style}
       name={props.name}
       value={props.value}
       weight={props.weight}
@@ -19,5 +29,4 @@ ItemTile.propTypes = {
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
-  parentId: PropTypes.string.isRequired,
 };

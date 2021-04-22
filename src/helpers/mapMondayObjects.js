@@ -74,7 +74,7 @@ function mapItem(item) {
           itemObj.values[cv.id] = {
             numeric: true,
             title: cv.title,
-            value: parseInt(cv.text)
+            value: cv.text === "" ? 0 : parseInt(cv.text)
           }
           break;
         default:

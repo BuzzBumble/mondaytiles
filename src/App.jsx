@@ -13,12 +13,19 @@ import { devSettings, devContext } from 'helpers/dev';
 const monday = mondaySdk();
 
 function App() {
-  const [context, setContext] = useState(devContext);
-  const [settings, setSettings] = useState(devSettings);
+  const [context, setContext] = useState({});
+  const [settings, setSettings] = useState({});
   const [board, setBoard] = useState({});
 
   // On initial render, set monday listener for context and settings
   useEffect(() => {
+    if (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname.includes('ngrok')
+    ) {
+      setContext(devContext);
+      setSettings(devSettings);
+    }
     monday.listen(['settings', 'context'], res => {
       if (res.type === 'context') {
         setContext(res.data);
@@ -31,7 +38,8 @@ function App() {
 
   // When context or settings change, remap board
   useEffect(() => {
-    if (context.boardIds && settings.weight_column_id) {
+    if (context.boardIds) {
+      // console.log(settings);
       const board_id = context.boardIds[0];
       getBoard(board_id).then(res => {
         let b = mapBoard(res.data.boards[0]);
@@ -40,17 +48,33 @@ function App() {
     }
   }, [context, settings]);
 
-  return (
-    <div className="App">
-      <SettingsProvider value={settings}>
-        <MondayProvider value={context}>
-          <BoardProvider value={board}>
-            <TileMap />
-          </BoardProvider>
-        </MondayProvider>
-      </SettingsProvider>
-    </div>
-  );
+  // useEffect(() => {
+  //   console.log(settings);
+  // }, [settings]);
+
+  // useEffect(() => {
+  //   console.log(board);
+  // }, [board]);
+
+  if (settings.group_column_id) {
+    return (
+      <div className="App">
+        <SettingsProvider value={settings}>
+          <MondayProvider value={context}>
+            <BoardProvider value={board}>
+              <TileMap />
+            </BoardProvider>
+          </MondayProvider>
+        </SettingsProvider>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <h1>Please select columns in the settings</h1>
+      </div>
+    );
+  }
 }
 
 export default App;
