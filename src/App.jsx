@@ -31,7 +31,6 @@ function App() {
         setContext(res.data);
       }
       if (res.type === 'settings') {
-        console.log(res.data);
         setSettings(mapSettings(res.data));
       }
     });
@@ -53,9 +52,9 @@ function App() {
   //   console.log(settings);
   // }, [settings]);
 
-  useEffect(() => {
-    console.log(board);
-  }, [board]);
+  // useEffect(() => {
+  //   console.log(board);
+  // }, [board]);
 
   if (settings.group_column_id) {
     return (
