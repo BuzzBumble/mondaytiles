@@ -18,10 +18,10 @@ const TileMap = () => {
 
   const groupBorder = useMemo(() => {
     return {
-      'border-top-width': 5,
-      'border-right-width': 10,
-      'border-bottom-width': 5,
-      'border-left-width': 3,
+      borderTopWidth: 5,
+      borderRightWidth: 10,
+      borderBottomWidth: 5,
+      borderLeftWidth: 3,
     };
   }, []);
 
@@ -38,12 +38,12 @@ const TileMap = () => {
     return {
       top: groupPadding.top,
       right:
-        groupBorder['border-right-width'] +
-        groupBorder['border-left-width'] +
+        groupBorder['borderRightWidth'] +
+        groupBorder['borderLeftWidth'] +
         groupPadding.right,
       bottom:
-        groupBorder['border-bottom-width'] +
-        groupBorder['border-top-width'] +
+        groupBorder['borderBottomWidth'] +
+        groupBorder['borderTopWidth'] +
         groupPadding.bottom,
       left: groupPadding.left,
     };
