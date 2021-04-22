@@ -32,7 +32,7 @@ export default class DataTile {
     });
   }
 
-  calcRects() {
+  calcRects(padding = {top: 0, right: 0, bottom: 0, left: 0}) {
     if (this.children.length === 0) return;
     const emptyRect = this.displayRect.getCopy();
     let remValue = this.value;
@@ -62,6 +62,7 @@ export default class DataTile {
     }
     row.recalc(emptyRect.getWidth(), emptyRect.getHeight(), remValue);
     for (tile of this.children) {
+      tile.displayRect.addPadding(padding);
       tile.calcRects();
     }
   }

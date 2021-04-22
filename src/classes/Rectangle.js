@@ -8,7 +8,7 @@ export default class Rectangle {
   }
 
   getCopy() {
-    return new Rectangle(this.x1, this.y1, this.x2, this.y2);
+    return new Rectangle(this.x1, this.y1, this.getWidth(), this.getHeight());
   }
 
   getWidth() {
@@ -25,6 +25,13 @@ export default class Rectangle {
 
   setHeight(height) {
     this.y2 = this.y1 + height;
+  }
+
+  addPadding(padding) {
+    this.y1 += padding.top;
+    this.y2 -= padding.bottom;
+    this.x1 += padding.left;
+    this.x2 -= padding.right;
   }
 
   getRatio() {

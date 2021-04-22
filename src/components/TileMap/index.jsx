@@ -26,7 +26,7 @@ const TileMap = () => {
         window.innerHeight,
       );
       console.clear();
-      tree.calcRects();
+      tree.calcRects({ top: 20, right: 0, bottom: 0, left: 0 });
       setTileData(tree);
     }
   }, [board, settings]);

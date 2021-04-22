@@ -1,6 +1,6 @@
 import './GroupTile.css';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { shortName } from 'helpers/util';
 
