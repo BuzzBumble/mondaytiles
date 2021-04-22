@@ -4,8 +4,10 @@ import Rectangle from 'classes/Rectangle';
 export const newTileTree = (board, weight_column_id, group_column_id, width, height) => {
   let tree = new DataTile("Root", "Root", 0);
   const rect = new Rectangle(0, 0, width, height);
+  const displayRect = rect.getCopy();
 
   tree.setRect(rect);
+  tree.setDisplayRect(displayRect);
 
   board.groups.forEach((group) => {
     const groupTile = new DataTile(group.id, group.title, 0);

@@ -17,8 +17,8 @@ const GroupTile = props => {
   const style = {
     left: tile.rect.x1,
     top: tile.rect.y1,
-    width: tile.rect.getWidth(),
-    height: tile.rect.getHeight(),
+    width: tile.rect.getWidth() - 1,
+    height: tile.rect.getHeight() - 1,
   };
 
   if (zoomed) {

@@ -25,6 +25,7 @@ const TileMap = () => {
         window.innerWidth,
         window.innerHeight,
       );
+      console.clear();
       tree.calcRects();
       setTileData(tree);
     }
