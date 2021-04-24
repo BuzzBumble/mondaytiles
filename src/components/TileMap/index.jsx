@@ -4,11 +4,11 @@ import {
   useEffect,
   useState,
   useMemo,
-  useRef,
   useCallback,
 } from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
+import Loader from 'monday-ui-react-core/dist/Loader';
 
 import { newTileTree } from 'helpers/tileMap';
 
@@ -27,6 +27,7 @@ const TileMap = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [loading, setLoading] = useState(true);
 
   const groupBorder = useMemo(() => {
     return {
@@ -69,9 +70,15 @@ const TileMap = () => {
   }, 500);
 
   useEffect(() => {
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', () => {
+      setLoading(true);
+      resize();
+    });
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', () => {
+        setLoading(true);
+        resize();
+      });
     };
   }, [resize]);
 
@@ -86,8 +93,9 @@ const TileMap = () => {
       );
       tree.calcRects(tilePadding);
       setTileData(tree);
+      setLoading(false);
     }
-  }, [board, settings, tilePadding, windowSize]);
+  }, [board, settings, tilePadding, windowSize, setLoading]);
 
   if (tileData && tileData.children.length > 0) {
     const tiles = tileData.children.map(tile => {
