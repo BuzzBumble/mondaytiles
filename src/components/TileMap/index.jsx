@@ -1,11 +1,5 @@
 import './TileMap.css';
-import {
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 import Loader from 'monday-ui-react-core/dist/Loader';
@@ -109,11 +103,30 @@ const TileMap = () => {
     });
     return (
       <div className="tilemap" id="tilemap-container">
+        {loading ? (
+          <div class="cover-screen">
+            <div class="spinner-container">
+              <Loader />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
         {tiles}
       </div>
     );
   } else {
-    return <div>No Items</div>;
+    if (loading) {
+      return (
+        <div class="cover-screen">
+          <div class="spinner-container">
+            <Loader />
+          </div>
+        </div>
+      );
+    } else {
+      return <div>No Items</div>;
+    }
   }
 };
 

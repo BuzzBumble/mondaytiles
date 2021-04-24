@@ -14,7 +14,7 @@ const monday = mondaySdk();
 
 function App() {
   const [context, setContext] = useState({});
-  const [settings, setSettings] = useState({});
+  const [settings, setSettings] = useState(undefined);
   const [board, setBoard] = useState({});
 
   // On initial render, set monday listener for context and settings
@@ -48,15 +48,10 @@ function App() {
     }
   }, [context, settings]);
 
-  // useEffect(() => {
-  //   console.log(settings);
-  // }, [settings]);
-
-  // useEffect(() => {
-  //   console.log(board);
-  // }, [board]);
-
-  if (settings.group_column_id) {
+  if (
+    settings !== undefined &&
+    settings.group_column_id !== undefined
+  ) {
     return (
       <div className="App">
         <SettingsProvider value={settings}>
@@ -68,6 +63,8 @@ function App() {
         </SettingsProvider>
       </div>
     );
+  } else if (settings === undefined) {
+    return <div></div>;
   } else {
     return (
       <div className="App">
