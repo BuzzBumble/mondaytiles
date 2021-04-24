@@ -1,11 +1,19 @@
 import './TileMap.css';
-import { useContext, useEffect, useState, useMemo } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+  useCallback,
+} from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 
 import { newTileTree } from 'helpers/tileMap';
 
 import GroupTile from 'components/GroupTile';
+import _ from 'lodash';
 
 // TileMap Component
 // Container component for rendering tiles within
@@ -15,6 +23,10 @@ const TileMap = () => {
   const board = useContext(BoardContext);
   const settings = useContext(SettingsContext);
   const [tileData, setTileData] = useState(undefined);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   const groupBorder = useMemo(() => {
     return {
@@ -49,24 +61,33 @@ const TileMap = () => {
     };
   }, [groupBorder, groupPadding]);
 
+  const resize = _.debounce(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, 500);
+
+  useEffect(() => {
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  }, [resize]);
+
   useEffect(() => {
     if (Object.keys(board).length > 0) {
       const tree = newTileTree(
         board,
         settings.weight_column_id,
         settings.group_column_id,
-        window.innerWidth,
-        window.innerHeight,
+        windowSize.width,
+        windowSize.height,
       );
       tree.calcRects(tilePadding);
       setTileData(tree);
     }
-  }, [board, settings, tilePadding]);
-
-  // useEffect(() => {
-  //   console.log('tiles changed');
-  //   console.log(tileData);
-  // }, [tileData]);
+  }, [board, settings, tilePadding, windowSize]);
 
   if (tileData && tileData.children.length > 0) {
     const tiles = tileData.children.map(tile => {

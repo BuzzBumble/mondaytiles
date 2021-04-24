@@ -11,6 +11,7 @@
     "@types/node": "^12.20.7",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
+    "lodash": "^4.17.21",
     "monday-sdk-js": "^0.1.2",
     "monday-ui-react-core": "0.0.111",
     "prop-types": "^15.7.2",

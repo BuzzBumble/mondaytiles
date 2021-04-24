@@ -10,9 +10,9 @@ const Tile = props => {
 
   return (
     <div style={props.style} className="tile" onClick={props.onClick}>
-      <p>Name: {props.name}</p>
-      <p>Value: {props.value}</p>
-      <p>Weight: {roundedWeight}</p>
+      <p>
+        {props.name} ({props.value})
+      </p>
     </div>
   );
 };
