@@ -1,6 +1,5 @@
 import './Tile.css';
 import PropTypes from 'prop-types';
-import Menu from 'monday-ui-react-core/dist/icons/Menu';
 
 import { useRef, useEffect, useState } from 'react';
 
