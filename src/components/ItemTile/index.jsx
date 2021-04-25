@@ -12,12 +12,22 @@ const ItemTile = props => {
     height: tile.rect.getHeight(),
   };
 
+  const hoverHandler = {
+    mouseover: e => {
+      e.target.style.backgroundColor = 'blue';
+    },
+    mouseout: e => {
+      e.target.style.backgroundColor = tile.color || 'grey';
+    },
+  };
+
   return (
     <Tile
       style={style}
       name={props.name}
       value={props.value}
       weight={props.weight}
+      hoverHandler={hoverHandler}
     />
   );
 };
