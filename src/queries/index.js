@@ -11,6 +11,8 @@ export const getBoard = (id) => {
         columns {
           id
           type
+          title
+          settings_str
         }
         items {
           id

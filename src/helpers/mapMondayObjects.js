@@ -10,9 +10,23 @@ export const mapBoard = (board) => {
 
   board.columns.forEach((column) => {
     if (isAcceptedType(column.type)) {
-      b.columns[column.id] = column.type;
+      b.columns[column.id] = {
+        type: column.type,
+        title: column.title,
+        settings: {}
+      };
+      const settings = JSON.parse(column.settings_str);
+      let tempSettings = null
+      if (column.type === "color") {
+        tempSettings = {};
+        for (const [key, value] of Object.entries(settings.labels)) {
+          tempSettings[value] = settings.labels_colors[key];
+        }
+      }
+      b.columns[column.id].settings = tempSettings;
     }
   });
+  console.log(b);
 
   b.groups = itemsByGroup(board.items);
   
