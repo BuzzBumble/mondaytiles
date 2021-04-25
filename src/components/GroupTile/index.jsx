@@ -73,6 +73,7 @@ const GroupTile = props => {
   } else {
     return (
       <Tile
+        id={tile.id}
         name={shortName(tile.name)}
         value={tile.value}
         weight={tile.weight}

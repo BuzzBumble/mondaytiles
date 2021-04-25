@@ -2,6 +2,7 @@ import './Tile.css';
 import PropTypes from 'prop-types';
 
 import { useRef, useEffect, useState } from 'react';
+import Tooltip from 'monday-ui-react-core/dist/Tooltip';
 
 // Tile Component
 // Basic display component for a Tile
@@ -26,26 +27,40 @@ const Tile = props => {
       'mouseout',
       props.hoverHandler.mouseout,
     );
-  }, [props.style, props.hoverHandler]);
+  }, [props.style, props.hoverHandler, tileRef]);
 
   return (
-    <div
-      ref={tileRef}
-      style={props.style}
-      className="tile"
-      onClick={props.onClick}
+    <Tooltip
+      content={props.name}
+      moveBy={{
+        main:
+          tileRef.current !== undefined
+            ? tileRef.current.clientHeight / -2
+            : 0,
+        secondary: 0,
+      }}
     >
-      {overflowing ? '' : <p>{props.name}</p>}
-    </div>
+      <div
+        id={props.id}
+        ref={tileRef}
+        style={props.style}
+        className="tile"
+        onClick={props.onClick}
+      >
+        <p className="tile-label">{props.name}</p>
+      </div>
+    </Tooltip>
   );
 };
 
 Tile.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
   style: PropTypes.object,
   hoverHandler: PropTypes.object,
+  tooltip: PropTypes.elementType,
 };
 
 export default Tile;

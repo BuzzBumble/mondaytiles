@@ -7,7 +7,12 @@
     place-items: center;
 }
 
-.tile p {
+.tile-label {
     margin-top: 0;
     margin-bottom: 0;
+    pointer-events: none;
+    width: 60%;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
 }
