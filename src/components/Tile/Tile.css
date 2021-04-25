@@ -1,20 +1,36 @@
 .tile {
-    border: 2px solid white;
-    background-color: lightgrey;
-    box-sizing: border-box;
-    position: absolute;
+  border: 1px solid white;
+  background-color: lightgrey;
+  box-sizing: border-box;
+  position: absolute;
+  display: table;
 }
 
-.tile p {
-    margin-top: 0;
-    margin-bottom: 0;
+.tile-label {
+  display: table-cell;
+  vertical-align: middle;
 }
+
+.tile-label-text {
+  display: block;
+  text-align: center;
+}
+
+.tile-info {
+  padding: 0.5em;
+  line-height: 0;
+  background-color: white;
+  border-radius: 4px;
+}
+
 .done {
-    background-color: var(--color-success);
+  background-color: var(--color-success);
 }
+
 .working {
-    background-color: var(--color-working_orange);
+  background-color: var(--color-working_orange);
 }
+
 .stuck {
-    background-color:var(--color-error);
+  background-color:var(--color-error);
 }
