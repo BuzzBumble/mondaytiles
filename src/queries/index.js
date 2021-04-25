@@ -11,6 +11,8 @@ export const getBoard = (id) => {
         columns {
           id
           type
+          title
+          settings_str
         }
         items {
           id
@@ -24,6 +26,7 @@ export const getBoard = (id) => {
           group {
             id
             title
+            color
           }
         }
       }

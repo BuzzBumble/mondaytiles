@@ -6,7 +6,7 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
   if (weight_column_id === undefined) {
     weightType = 'count';
   } else {
-    weightType = board.columns[weight_column_id];
+    weightType = board.columns[weight_column_id].type;
   }
 
   let tree = new DataTile("Root", "Root", 0);
@@ -18,8 +18,9 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
 
   board.groups.forEach((group) => {
     const groupTile = new DataTile(group.id, group.title, 0);
+    groupTile.color = group.color;
 
-    const categories = mapCategories(group, group_column_id, weight_column_id, weightType);
+    const categories = mapCategories(group, group_column_id, weight_column_id, weightType, board.columns);
 
     groupTile.addChildren(Object.values(categories));
     tree.addChild(groupTile);
@@ -27,21 +28,22 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
 
   tree.calcChildrenWeights();
   tree.sortChildren();
+  console.log(tree);
   return tree;
 };
 
-function mapCategories(group, group_column_id, weight_column_id, weightType) {
+function mapCategories(group, group_column_id, weight_column_id, weightType, columns) {
   const categories = {};
   group.items.forEach((item) => {
     let category_name = item.values[group_column_id].value;
     if (category_name === "") category_name = "None";
     let item_weight_value;
     if (weightType === 'numeric') {
-      item_weight_value = item.values[weight_column_id].value;
+      item_weight_value = item.values[weight_column_id];
     } else if (weightType === 'count') {
       item_weight_value = 1;
     }
-    const affectedCategories = addCategories(categories, item, group.id, group_column_id);
+    const affectedCategories = addCategories(categories, item, group.id, group_column_id, columns);
     const cLength = affectedCategories.length;
     if (cLength === 1) {
       const itemTile = new DataTile(item.id, item.name, item_weight_value);
@@ -61,9 +63,9 @@ function mapCategories(group, group_column_id, weight_column_id, weightType) {
   return categories;
 }
 
-function addCategories(categories, item, groupId, group_column_id) {
+function addCategories(categories, item, groupId, group_column_id, columns) {
   const c = [];
-  let name = item.values[group_column_id].value;
+  let name = item.values[group_column_id];
   if (name === "") {
     name = 'None';
     if (!hasCategory(categories, name)) {
@@ -72,6 +74,7 @@ function addCategories(categories, item, groupId, group_column_id) {
         name,
         0
       );
+      tile.color = null;
       categories[name] = tile;
     }
     c.push(categories[name]);
@@ -86,6 +89,10 @@ function addCategories(categories, item, groupId, group_column_id) {
         name,
         0
       );
+      tile.color = null;
+      if (columns[group_column_id].type === "color") {
+        tile.color = columns[group_column_id].settings[name].color;
+      }
       categories[name] = tile;
     }
     c.push(categories[name]);

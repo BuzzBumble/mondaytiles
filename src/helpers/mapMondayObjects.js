@@ -10,12 +10,26 @@ export const mapBoard = (board) => {
 
   board.columns.forEach((column) => {
     if (isAcceptedType(column.type)) {
-      b.columns[column.id] = column.type;
+      b.columns[column.id] = {
+        type: column.type,
+        title: column.title,
+        settings: {}
+      };
+      const settings = JSON.parse(column.settings_str);
+      let tempSettings = null
+      if (column.type === "color") {
+        tempSettings = {};
+        for (const [key, value] of Object.entries(settings.labels)) {
+          tempSettings[value] = settings.labels_colors[key];
+        }
+      }
+      b.columns[column.id].settings = tempSettings;
     }
   });
-
+  
   b.groups = itemsByGroup(board.items);
   
+  console.log(b);
   return b;
 }
 
@@ -53,7 +67,8 @@ function itemsByGroup(items) {
         groups.push({
           id: item.group.id,
           title: item.group.title,
-          items: [itemObj]
+          items: [itemObj],
+          color: item.group.color
         });
       }
   });
@@ -71,18 +86,11 @@ function mapItem(item) {
     if (isAcceptedType(cv.type)) {
       switch (cv.type) {
         case "numeric":
-          itemObj.values[cv.id] = {
-            numeric: true,
-            title: cv.title,
-            value: cv.text === "" ? 0 : parseInt(cv.text)
-          }
+          itemObj.values[cv.id] = cv.text === "" ? 0 : parseInt(cv.text);
           break;
         default:
-          itemObj.values[cv.id] = {
-            numeric: false,
-            title: cv.title,
-            value: cv.text
-          }
+          itemObj.values[cv.id] = cv.text;
+          break;
       }
     }
   });

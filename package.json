@@ -2,6 +2,13 @@
   "name": "mondaytiles",
   "version": "0.1.0",
   "private": true,
+  "author": "Steven Kang <@s.kang919@gmail.com>",
+  "contributors": [
+    {
+      "name": "Steven Kang",
+      "email": "s.kang919@gmail.com"
+    }
+  ],
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^5.11.10",
