@@ -11,6 +11,8 @@ export const getBoard = (id) => {
         columns {
           id
           type
+          title
+          settings_str
         }
         items {
           id
@@ -20,7 +22,6 @@ export const getBoard = (id) => {
             type
             title
             text
-            additional_info
           }
           group {
             id

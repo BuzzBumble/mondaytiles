@@ -91,9 +91,9 @@ const TileMap = () => {
     }
   }, [board, settings, tilePadding, windowSize, setLoading]);
 
-  useEffect(() => {
-    console.log(tileData);
-  }, [tileData]);
+  // useEffect(() => {
+  //   console.log(tileData);
+  // }, [tileData]);
 
   if (tileData && tileData.children.length > 0) {
     const tiles = tileData.children.map(tile => {
