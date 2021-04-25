@@ -1,18 +1,42 @@
 import './Tile.css';
 import PropTypes from 'prop-types';
+import Menu from 'monday-ui-react-core/dist/icons/Menu';
+
+import { useRef, useEffect, useState } from 'react';
 
 // Tile Component
 // Basic display component for a Tile
 //
 // DEPENDENCIES: []
 const Tile = props => {
-  const roundedWeight = Math.round(props.weight * 100000) / 1000;
+  const [overflowing, setOverflowing] = useState(false);
+  const tileRef = useRef();
+
+  useEffect(() => {
+    const yOverflowing =
+      tileRef.current.scrollHeight > tileRef.current.clientHeight;
+    const xOverflowing =
+      tileRef.current.scrollWidth > tileRef.current.clientWidth;
+    setOverflowing(yOverflowing || xOverflowing);
+
+    tileRef.current.addEventListener(
+      'mouseover',
+      props.hoverHandler.mouseover,
+    );
+    tileRef.current.addEventListener(
+      'mouseout',
+      props.hoverHandler.mouseout,
+    );
+  }, [props.style, props.hoverHandler]);
 
   return (
-    <div style={props.style} className="tile" onClick={props.onClick}>
-      <p>
-        {props.name} ({props.value})
-      </p>
+    <div
+      ref={tileRef}
+      style={props.style}
+      className="tile"
+      onClick={props.onClick}
+    >
+      {overflowing ? '' : <p>{props.name}</p>}
     </div>
   );
 };
@@ -21,9 +45,8 @@ Tile.propTypes = {
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
   style: PropTypes.object,
+  hoverHandler: PropTypes.object,
 };
 
 export default Tile;
