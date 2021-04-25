@@ -25,10 +25,11 @@ const GroupTile = props => {
 
   const hoverHandler = {
     mouseover: e => {
-      e.target.style.backgroundColor = 'blue';
+      e.target.style.opacity = 0.8;
     },
     mouseout: e => {
       e.target.style.backgroundColor = tile.color || 'grey';
+      e.target.style.opacity = 1;
     },
   };
 

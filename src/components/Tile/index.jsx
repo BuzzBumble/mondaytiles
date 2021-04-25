@@ -47,7 +47,7 @@ const Tile = props => {
         {overflowing ? (
           ''
         ) : (
-          <p className="tile-label">
+          <p className="tile-label paragraph-bold">
             {props.name}
             <br />
             {props.value}
