@@ -31,7 +31,7 @@ const Tile = props => {
 
   return (
     <Tooltip
-      content={props.name}
+      content={props.name + ' (' + props.value + ')'}
       moveBy={{
         main:
           tileRef.current !== undefined
@@ -47,7 +47,11 @@ const Tile = props => {
         className="tile"
         onClick={props.onClick}
       >
-        <p className="tile-label">{props.name}</p>
+        <p className="tile-label">
+          {props.name}
+          <br />
+          {props.value}
+        </p>
       </div>
     </Tooltip>
   );
