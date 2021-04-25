@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // Header for a zoomed/expanded GroupTile
 const GroupTileHeader = props => {
   return (
-    <div className="grouptile-header" onClick={props.onClick}>
+    <div className="grouptile-header paragraph" onClick={props.onClick}>
       {props.name}
     </div>
   );

@@ -1,7 +1,7 @@
 .grouptile {
-    position: absolute;
-    box-sizing: border-box;
-    background-color: white;
-    border-style: solid;
-    border-color: green;
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid white;
+  background-color: white;
+  border-style: solid;
 }
