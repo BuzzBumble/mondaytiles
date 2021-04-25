@@ -1,29 +1,71 @@
 import './Tile.css';
 import PropTypes from 'prop-types';
 
+import { useRef, useEffect, useState } from 'react';
+import Tooltip from 'monday-ui-react-core/dist/Tooltip';
+
 // Tile Component
 // Basic display component for a Tile
 //
 // DEPENDENCIES: []
 const Tile = props => {
-  const roundedWeight = Math.round(props.weight * 100000) / 1000;
+  const [overflowing, setOverflowing] = useState(false);
+  const tileRef = useRef();
+  const [tipOffset, setTipOffset] = useState(0);
+
+  useEffect(() => {
+    const yOverflowing =
+      tileRef.current.scrollHeight > tileRef.current.clientHeight;
+    const xOverflowing =
+      tileRef.current.scrollWidth > tileRef.current.clientWidth;
+    setOverflowing(yOverflowing || xOverflowing);
+
+    tileRef.current.addEventListener(
+      'mouseover',
+      props.hoverHandler.mouseover,
+    );
+    tileRef.current.addEventListener(
+      'mouseout',
+      props.hoverHandler.mouseout,
+    );
+
+    setTipOffset(tileRef.current.clientHeight / -2);
+  }, [props.style, props.hoverHandler]);
 
   return (
-    <div style={props.style} className="tile" onClick={props.onClick}>
-      <p>
-        {props.name} ({props.value})
-      </p>
-    </div>
+    <Tooltip
+      content={props.name + ' (' + props.value + ')'}
+      moveBy={{ main: tipOffset, secondary: 0 }}
+    >
+      <div
+        id={props.id}
+        ref={tileRef}
+        style={props.style}
+        className="tile"
+        onClick={props.onClick}
+      >
+        {overflowing ? (
+          ''
+        ) : (
+          <p className="tile-label">
+            {props.name}
+            <br />
+            {props.value}
+          </p>
+        )}
+      </div>
+    </Tooltip>
   );
 };
 
 Tile.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
   style: PropTypes.object,
+  hoverHandler: PropTypes.object,
+  tooltip: PropTypes.elementType,
 };
 
 export default Tile;

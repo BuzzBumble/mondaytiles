@@ -23,6 +23,15 @@ const GroupTile = props => {
     borderColor: tile.color === null ? 'grey' : tile.color,
   };
 
+  const hoverHandler = {
+    mouseover: e => {
+      e.target.style.backgroundColor = 'blue';
+    },
+    mouseout: e => {
+      e.target.style.backgroundColor = tile.color || 'grey';
+    },
+  };
+
   if (zoomed) {
     const tiles = tile.children.map(child => {
       const name = shortName(child.name);
@@ -64,11 +73,13 @@ const GroupTile = props => {
   } else {
     return (
       <Tile
+        id={tile.id}
         name={shortName(tile.name)}
         value={tile.value}
         weight={tile.weight}
         style={style}
         onClick={() => setZoomed(true)}
+        hoverHandler={hoverHandler}
       />
     );
   }
