@@ -22,7 +22,6 @@ export const getBoard = (id) => {
             type
             title
             text
-            additional_info
           }
           group {
             id

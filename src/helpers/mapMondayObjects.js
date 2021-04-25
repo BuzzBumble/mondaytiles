@@ -26,10 +26,10 @@ export const mapBoard = (board) => {
       b.columns[column.id].settings = tempSettings;
     }
   });
-  console.log(b);
-
+  
   b.groups = itemsByGroup(board.items);
   
+  console.log(b);
   return b;
 }
 
@@ -83,28 +83,14 @@ function mapItem(item) {
     values: {}
   };
   item.column_values.forEach((cv) => {
-    let additional_info = cv.additional_info;
-    let color = null;
-    if (additional_info !== null) {
-      color = JSON.parse(additional_info).color;
-    }
     if (isAcceptedType(cv.type)) {
       switch (cv.type) {
         case "numeric":
-          itemObj.values[cv.id] = {
-            numeric: true,
-            title: cv.title,
-            value: cv.text === "" ? 0 : parseInt(cv.text),
-            color
-          }
+          itemObj.values[cv.id] = cv.text === "" ? 0 : parseInt(cv.text);
           break;
         default:
-          itemObj.values[cv.id] = {
-            numeric: false,
-            title: cv.title,
-            value: cv.text,
-            color
-          }
+          itemObj.values[cv.id] = cv.text;
+          break;
       }
     }
   });
