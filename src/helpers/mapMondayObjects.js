@@ -53,7 +53,8 @@ function itemsByGroup(items) {
         groups.push({
           id: item.group.id,
           title: item.group.title,
-          items: [itemObj]
+          items: [itemObj],
+          color: item.group.color
         });
       }
   });
@@ -68,20 +69,27 @@ function mapItem(item) {
     values: {}
   };
   item.column_values.forEach((cv) => {
+    let additional_info = cv.additional_info;
+    let color = null;
+    if (additional_info !== null) {
+      color = JSON.parse(additional_info).color;
+    }
     if (isAcceptedType(cv.type)) {
       switch (cv.type) {
         case "numeric":
           itemObj.values[cv.id] = {
             numeric: true,
             title: cv.title,
-            value: cv.text === "" ? 0 : parseInt(cv.text)
+            value: cv.text === "" ? 0 : parseInt(cv.text),
+            color
           }
           break;
         default:
           itemObj.values[cv.id] = {
             numeric: false,
             title: cv.title,
-            value: cv.text
+            value: cv.text,
+            color
           }
       }
     }

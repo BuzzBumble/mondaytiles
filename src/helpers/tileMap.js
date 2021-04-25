@@ -18,6 +18,7 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
 
   board.groups.forEach((group) => {
     const groupTile = new DataTile(group.id, group.title, 0);
+    groupTile.color = group.color;
 
     const categories = mapCategories(group, group_column_id, weight_column_id, weightType);
 
@@ -72,6 +73,7 @@ function addCategories(categories, item, groupId, group_column_id) {
         name,
         0
       );
+      tile.color = item.values[group_column_id].color
       categories[name] = tile;
     }
     c.push(categories[name]);
@@ -86,6 +88,7 @@ function addCategories(categories, item, groupId, group_column_id) {
         name,
         0
       );
+      tile.color = item.values[group_column_id].color
       categories[name] = tile;
     }
     c.push(categories[name]);

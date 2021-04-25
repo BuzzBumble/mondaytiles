@@ -25,10 +25,10 @@ const TileMap = () => {
 
   const groupBorder = useMemo(() => {
     return {
-      borderTopWidth: 5,
-      borderRightWidth: 10,
-      borderBottomWidth: 5,
-      borderLeftWidth: 3,
+      borderTopWidth: 2,
+      borderRightWidth: 2,
+      borderBottomWidth: 2,
+      borderLeftWidth: 2,
     };
   }, []);
 
@@ -91,6 +91,10 @@ const TileMap = () => {
     }
   }, [board, settings, tilePadding, windowSize, setLoading]);
 
+  useEffect(() => {
+    console.log(tileData);
+  }, [tileData]);
+
   if (tileData && tileData.children.length > 0) {
     const tiles = tileData.children.map(tile => {
       return (
@@ -104,8 +108,8 @@ const TileMap = () => {
     return (
       <div className="tilemap" id="tilemap-container">
         {loading ? (
-          <div class="cover-screen">
-            <div class="spinner-container">
+          <div className="cover-screen">
+            <div className="spinner-container">
               <Loader />
             </div>
           </div>
@@ -118,8 +122,8 @@ const TileMap = () => {
   } else {
     if (loading) {
       return (
-        <div class="cover-screen">
-          <div class="spinner-container">
+        <div className="cover-screen">
+          <div className="spinner-container">
             <Loader />
           </div>
         </div>
