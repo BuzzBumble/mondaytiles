@@ -28,7 +28,6 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
 
   tree.calcChildrenWeights();
   tree.sortChildren();
-  console.log(tree);
   return tree;
 };
 

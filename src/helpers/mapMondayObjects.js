@@ -30,8 +30,6 @@ export const mapBoard = (board, users) => {
   });
   
   b.groups = itemsByGroup(board.items);
-  
-  console.log(b);
   return b;
 }
 

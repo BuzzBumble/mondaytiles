@@ -2,7 +2,7 @@
 
 // Example settings for out-of-preview environment
 export const devSettings = {
-  "group_column_id": "status",
+  "group_column_id": "person",
   "weight_column_id": "numbers"
 };
 
