@@ -53,6 +53,7 @@ function mapCategories(group, group_column_id, weight_column_id, weightType, col
       const splitValue = item_weight_value / cLength;
       for (let c of affectedCategories) {
         const itemTile = new DataTile(item.id + "-" + c.name, item.name, splitValue);
+        itemTile.fullValue = item_weight_value;
         itemTile.color = c.color;
         if (weightType === 'count') {
           itemTile.value = 1;
