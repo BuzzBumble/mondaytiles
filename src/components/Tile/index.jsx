@@ -36,6 +36,7 @@ const Tile = props => {
       className="tile"
       onClick={props.onClick}
     >
+<<<<<<< HEAD
       {overflowing ? (
         ''
       ) : (
@@ -46,6 +47,26 @@ const Tile = props => {
         </p>
       )}
     </div>
+=======
+      <div
+        id={props.id}
+        ref={tileRef}
+        style={props.style}
+        className="tile"
+        onClick={props.onClick}
+      >
+        {overflowing ? (
+          ''
+        ) : (
+          <p className="tile-label paragraph-bold">
+            {props.name}
+            <br />
+            {props.value}
+          </p>
+        )}
+      </div>
+    </Tooltip>
+>>>>>>> f74913b810de05ea93173d8c5dbdc166e5b490a8
   );
 };
 

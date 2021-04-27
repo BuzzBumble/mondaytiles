@@ -1,7 +1,14 @@
 .tile {
+<<<<<<< HEAD
     border: 1px solid white;
     box-sizing: border-box;
     position: absolute;
+=======
+    background-color: grey;
+    box-sizing: border-box;
+    position: absolute;
+    border: 1px solid white;
+>>>>>>> f74913b810de05ea93173d8c5dbdc166e5b490a8
     display: grid;
     place-items: center;
 }
