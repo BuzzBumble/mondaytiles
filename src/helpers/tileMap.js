@@ -20,7 +20,7 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
     const groupTile = new DataTile(group.id, group.title, 0);
     groupTile.color = group.color;
 
-    const categories = mapCategories(group, group_column_id, weight_column_id, weightType, board.columns, board.users);
+    const categories = mapCategories(group, group_column_id, weight_column_id, weightType, board);
 
     groupTile.addChildren(Object.values(categories));
     tree.addChild(groupTile);
@@ -32,7 +32,7 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
   return tree;
 };
 
-function mapCategories(group, group_column_id, weight_column_id, weightType, columns, users) {
+function mapCategories(group, group_column_id, weight_column_id, weightType, board) {
   const categories = {};
   group.items.forEach((item) => {
     let category_name = item.values[group_column_id];
@@ -43,11 +43,12 @@ function mapCategories(group, group_column_id, weight_column_id, weightType, col
     } else if (weightType === 'count') {
       item_weight_value = 1;
     }
-    const affectedCategories = addCategories(categories, item, group.id, group_column_id, columns, users);
+    const affectedCategories = addCategories(categories, item, group.id, group_column_id, board.columns, board.users);
     const cLength = affectedCategories.length;
     if (cLength === 1) {
       const itemTile = new DataTile(item.id, item.name, item_weight_value);
       itemTile.color = affectedCategories[0].color;
+      itemTile.url = board.url + '/pulses/' + item.id
       affectedCategories[0].addChild(itemTile);
     } else if (cLength > 1) {
       const splitValue = item_weight_value / cLength;
@@ -58,6 +59,7 @@ function mapCategories(group, group_column_id, weight_column_id, weightType, col
         if (weightType === 'count') {
           itemTile.value = 1;
         }
+        itemTile.url = board.url + '/pulses/' + item.id
         c.addChild(itemTile);
       }
     }

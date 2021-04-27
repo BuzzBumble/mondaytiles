@@ -14,6 +14,7 @@ export default class DataTile {
     this.displayRect = null;
     this.children = [];
     this.color = null;
+    this.url = null;
   }
 
   setRect(rect) {

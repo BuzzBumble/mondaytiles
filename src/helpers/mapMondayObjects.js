@@ -4,11 +4,11 @@ export const acceptedTypes = [
   "color"
 ]
 
-
-export const mapBoard = (board, users) => {
+export const mapBoard = (board, users, slug) => {
   let b = {};
   b.columns = {};
   b.users = mapUsers(users);
+  b.url = `https://${slug}.monday.com/boards/${board.id}`
 
   board.columns.forEach((column) => {
     if (isAcceptedType(column.type)) {

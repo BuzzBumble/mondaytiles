@@ -93,3 +93,7 @@ code {
   color: #1F76C2;
   color: var(--link-color);
 }
+
+.hover-pointer {
+  cursor: pointer;
+}

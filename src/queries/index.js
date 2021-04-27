@@ -7,11 +7,17 @@ monday.setToken(token);
 export const getBoard = (id) => {
   let query = `
     query ($boardIds: [Int]) {
+      me {
+        account {
+          slug
+        }
+      }
       users {
         id
         name
       }
       boards (ids: $boardIds) {
+        id
         columns {
           id
           type
