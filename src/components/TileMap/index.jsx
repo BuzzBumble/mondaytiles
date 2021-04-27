@@ -1,5 +1,11 @@
 import './TileMap.css';
-import { useContext, useEffect, useState, useMemo } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
 import Loader from 'monday-ui-react-core/dist/Loader';
@@ -56,12 +62,14 @@ const TileMap = () => {
     };
   }, [groupBorder, groupPadding]);
 
-  const resize = _.debounce(() => {
+  const resizeCallback = useCallback(() => {
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight,
     });
-  }, 500);
+  }, []);
+
+  const resize = _.debounce(resizeCallback, 500);
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -82,18 +90,24 @@ const TileMap = () => {
         board,
         settings.weight_column_id,
         settings.group_column_id,
-        windowSize.width,
-        windowSize.height,
+        window.innerWidth,
+        window.innerHeight,
       );
       tree.calcRects(tilePadding);
       setTileData(tree);
       setLoading(false);
     }
-  }, [board, settings, tilePadding, windowSize, setLoading]);
+  }, [board, settings, tilePadding]);
 
-  // useEffect(() => {
-  //   console.log(tileData);
-  // }, [tileData]);
+  useEffect(() => {
+    setTileData(td => {
+      if (td === undefined) return;
+      td.resize(windowSize.width, windowSize.height);
+      td.calcRects(tilePadding);
+      return td;
+    });
+    setLoading(false);
+  }, [windowSize, tilePadding]);
 
   if (tileData && tileData.children.length > 0) {
     const tiles = tileData.children.map(tile => {

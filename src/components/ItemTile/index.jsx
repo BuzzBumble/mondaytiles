@@ -10,15 +10,12 @@ const ItemTile = props => {
     top: tile.rect.y1,
     width: tile.rect.getWidth(),
     height: tile.rect.getHeight(),
+    backgroundColor: tile.color,
   };
 
   const hoverHandler = {
-    mouseover: e => {
-      e.target.style.backgroundColor = 'blue';
-    },
-    mouseout: e => {
-      e.target.style.backgroundColor = tile.color || 'grey';
-    },
+    mouseover: e => {},
+    mouseout: e => {},
   };
 
   return (
@@ -39,4 +36,5 @@ ItemTile.propTypes = {
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  tile: PropTypes.object,
 };

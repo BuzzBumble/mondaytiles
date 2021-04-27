@@ -4,9 +4,11 @@ export const acceptedTypes = [
   "color"
 ]
 
-export const mapBoard = (board) => {
+
+export const mapBoard = (board, users) => {
   let b = {};
   b.columns = {};
+  b.users = mapUsers(users);
 
   board.columns.forEach((column) => {
     if (isAcceptedType(column.type)) {
@@ -28,8 +30,6 @@ export const mapBoard = (board) => {
   });
   
   b.groups = itemsByGroup(board.items);
-  
-  console.log(b);
   return b;
 }
 
@@ -96,4 +96,19 @@ function mapItem(item) {
   });
 
   return itemObj;
+}
+
+function mapUsers(users) {
+  let colorIndex = 0;
+  const colors = ['#FFCB00','#E2445C', '#a25ddc', '#0086c0', '#7e3b8a', '#225091', '#ff642e', '#9cd326', '#ff7575', '#4eccc6'];
+  const obj = {};
+  for (let user of users) {
+    obj[user.name] = {
+      id: user.id,
+      name: user.name,
+      color: colors[colorIndex++]
+    }
+    if (colorIndex >= colors.length) colorIndex = 0;
+  }
+  return obj;
 }
