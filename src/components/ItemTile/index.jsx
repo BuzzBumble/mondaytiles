@@ -18,11 +18,7 @@ const ItemTile = props => {
       e.target.style.opacity = 0.8;
     },
     mouseout: e => {
-<<<<<<< HEAD
       e.target.style.backgroundColor = tile.color;
-=======
-      e.target.style.backgroundColor = tile.color || 'grey';
->>>>>>> f74913b810de05ea93173d8c5dbdc166e5b490a8
       e.target.style.opacity = 1;
     },
   };
