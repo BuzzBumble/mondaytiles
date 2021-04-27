@@ -31,16 +31,16 @@ const TileMap = () => {
 
   const groupBorder = useMemo(() => {
     return {
-      borderTopWidth: 2,
-      borderRightWidth: 2,
-      borderBottomWidth: 2,
-      borderLeftWidth: 2,
+      borderTopWidth: 10,
+      borderRightWidth: 10,
+      borderBottomWidth: 10,
+      borderLeftWidth: 10,
     };
   }, []);
 
   const groupPadding = useMemo(() => {
     return {
-      top: 20,
+      top: 30,
       right: 0,
       bottom: 0,
       left: 0,
