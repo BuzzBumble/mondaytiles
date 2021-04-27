@@ -1,5 +1,6 @@
 import Rectangle from "classes/Rectangle";
 import Row from "classes/Row";
+import {getColorVariant} from 'helpers/colors';
 
 // Tile Class
 export default class DataTile {
@@ -93,7 +94,9 @@ export default class DataTile {
   }
 
   calcChildrenWeights() {
-    if (this.children.length === 0) return;
+    if (this.children.length === 0) {
+      return;
+    }
 
     this.children.forEach((child) => {
       child.calcChildrenWeights();
@@ -112,8 +115,27 @@ export default class DataTile {
     return this.value;
   }
 
+  calcChildrenColors() {
+    if (this.children.length < 1) {
+      return;
+    }
+
+    const isLastBranch = this.children[0].children.length === 0;
+    if (isLastBranch) {
+      const maxValue = this.children[0].value * 1.25;
+      for (let c of this.children) {
+        const weight = c.value / maxValue;
+        c.color = getColorVariant(this.color, weight);
+      }
+    } else {
+      for (let c of this.children) {
+        c.calcChildrenColors();
+      }
+    }
+  }
+
   sortChildren(asc=false) {
-    if (this.children.length < 2) {
+    if (this.children.length === 0) {
       return;
     }
 
@@ -128,6 +150,12 @@ export default class DataTile {
     this.children.forEach((child) => {
       child.sortChildren(asc);
     });
+  }
+
+  resize(width, height) {
+    this.rect.x2 = this.rect.x1 + width;
+    this.rect.y2 = this.rect.y1 + height;
+    this.displayRect = this.rect.getCopy();
   }
 
 }

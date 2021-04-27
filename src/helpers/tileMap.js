@@ -28,6 +28,7 @@ export const newTileTree = (board, weight_column_id, group_column_id, width, hei
 
   tree.calcChildrenWeights();
   tree.sortChildren();
+  tree.calcChildrenColors();
   return tree;
 };
 
@@ -46,11 +47,13 @@ function mapCategories(group, group_column_id, weight_column_id, weightType, col
     const cLength = affectedCategories.length;
     if (cLength === 1) {
       const itemTile = new DataTile(item.id, item.name, item_weight_value);
+      itemTile.color = affectedCategories[0].color;
       affectedCategories[0].addChild(itemTile);
     } else if (cLength > 1) {
       const splitValue = item_weight_value / cLength;
       for (let c of affectedCategories) {
         const itemTile = new DataTile(item.id + "-" + c.name, item.name, splitValue);
+        itemTile.color = c.color;
         if (weightType === 'count') {
           itemTile.value = 1;
         }
@@ -73,7 +76,7 @@ function addCategories(categories, item, groupId, group_column_id, columns, user
         name,
         0
       );
-      tile.color = null;
+      tile.color = '#adadad';
       categories[name] = tile;
     }
     c.push(categories[name]);
@@ -88,7 +91,7 @@ function addCategories(categories, item, groupId, group_column_id, columns, user
         name,
         0
       );
-      tile.color = null;
+      tile.color = '#adadad';
       if (columns[group_column_id].type === "color") {
         tile.color = columns[group_column_id].settings[name].color;
       } else if (columns[group_column_id].type === 'multiple-person') {

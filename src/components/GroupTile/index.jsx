@@ -19,8 +19,8 @@ const GroupTile = props => {
     top: tile.rect.y1,
     width: tile.rect.getWidth(),
     height: tile.rect.getHeight(),
-    backgroundColor: tile.color === null ? 'grey' : tile.color,
-    borderColor: tile.color === null ? 'grey' : tile.color,
+    backgroundColor: tile.color,
+    borderColor: tile.color,
   };
 
   const hoverHandler = {

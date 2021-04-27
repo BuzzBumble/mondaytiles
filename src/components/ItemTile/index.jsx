@@ -10,6 +10,7 @@ const ItemTile = props => {
     top: tile.rect.y1,
     width: tile.rect.getWidth(),
     height: tile.rect.getHeight(),
+    backgroundColor: tile.color,
   };
 
   const hoverHandler = {
@@ -35,4 +36,5 @@ ItemTile.propTypes = {
   name: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  tile: PropTypes.object,
 };
