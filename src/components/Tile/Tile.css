@@ -1,14 +1,7 @@
 .tile {
-<<<<<<< HEAD
     border: 1px solid white;
     box-sizing: border-box;
     position: absolute;
-=======
-    background-color: grey;
-    box-sizing: border-box;
-    position: absolute;
-    border: 1px solid white;
->>>>>>> Changed hover and font colours
     display: grid;
     place-items: center;
 }
