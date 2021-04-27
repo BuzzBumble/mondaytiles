@@ -14,8 +14,18 @@ const ItemTile = props => {
   };
 
   const hoverHandler = {
-    mouseover: e => {},
-    mouseout: e => {},
+    mouseover: e => {
+      e.target.classList.add('hover-pointer');
+    },
+    mouseout: e => {
+      e.target.classList.remove('hover-pointer');
+    },
+  };
+
+  const onClick = () => {
+    if (tile.url) {
+      window.open(tile.url);
+    }
   };
 
   return (
@@ -25,6 +35,8 @@ const ItemTile = props => {
       value={props.value}
       weight={props.weight}
       hoverHandler={hoverHandler}
+      url={tile.url}
+      onClick={onClick}
     />
   );
 };

@@ -42,7 +42,11 @@ function App() {
       // console.log(settings);
       const board_id = context.boardIds[0];
       getBoard(board_id).then(res => {
-        let b = mapBoard(res.data.boards[0], res.data.users);
+        let b = mapBoard(
+          res.data.boards[0],
+          res.data.users,
+          res.data.me.account.slug,
+        );
         setBoard(b);
       });
     }

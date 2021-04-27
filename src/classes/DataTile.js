@@ -8,11 +8,13 @@ export default class DataTile {
     this.id = id;
     this.name = name;
     this.value = value;
+    this.fullValue = value;
     this.weight = 1;
     this.rect = null;
     this.displayRect = null;
     this.children = [];
     this.color = null;
+    this.url = null;
   }
 
   setRect(rect) {

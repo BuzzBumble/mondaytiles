@@ -2,7 +2,6 @@ import './Tile.css';
 import PropTypes from 'prop-types';
 
 import { useRef, useEffect, useState } from 'react';
-import Tooltip from 'monday-ui-react-core/dist/Tooltip';
 
 // Tile Component
 // Basic display component for a Tile
@@ -11,7 +10,6 @@ import Tooltip from 'monday-ui-react-core/dist/Tooltip';
 const Tile = props => {
   const [overflowing, setOverflowing] = useState(false);
   const tileRef = useRef();
-  const [tipOffset, setTipOffset] = useState(0);
 
   useEffect(() => {
     const yOverflowing =
@@ -28,33 +26,26 @@ const Tile = props => {
       'mouseout',
       props.hoverHandler.mouseout,
     );
-
-    setTipOffset(tileRef.current.clientHeight / -2);
   }, [props.style, props.hoverHandler]);
 
   return (
-    <Tooltip
-      content={props.name + ' (' + props.value + ')'}
-      moveBy={{ main: tipOffset, secondary: 0 }}
+    <div
+      id={props.id}
+      ref={tileRef}
+      style={props.style}
+      className="tile"
+      onClick={props.onClick}
     >
-      <div
-        id={props.id}
-        ref={tileRef}
-        style={props.style}
-        className="tile"
-        onClick={props.onClick}
-      >
-        {overflowing ? (
-          ''
-        ) : (
-          <p className="tile-label">
-            {props.name}
-            <br />
-            {props.value}
-          </p>
-        )}
-      </div>
-    </Tooltip>
+      {overflowing ? (
+        ''
+      ) : (
+        <p className="tile-label">
+          {props.name}
+          <br />
+          {props.value}
+        </p>
+      )}
+    </div>
   );
 };
 
