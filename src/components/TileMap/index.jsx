@@ -8,11 +8,11 @@ import {
 } from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
-import Loader from 'monday-ui-react-core/dist/Loader';
 
 import { newTileTree } from 'helpers/tileMap';
 
 import GroupTile from 'components/GroupTile';
+import Spinner from 'components/Spinner';
 import _ from 'lodash';
 
 // TileMap Component
@@ -121,27 +121,13 @@ const TileMap = () => {
     });
     return (
       <div className="tilemap" id="tilemap-container">
-        {loading ? (
-          <div className="cover-screen">
-            <div className="spinner-container">
-              <Loader />
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        {loading ? <Spinner /> : ''}
         {tiles}
       </div>
     );
   } else {
     if (loading) {
-      return (
-        <div className="cover-screen">
-          <div className="spinner-container">
-            <Loader />
-          </div>
-        </div>
-      );
+      return <Spinner />;
     } else {
       return <div>No Items</div>;
     }
