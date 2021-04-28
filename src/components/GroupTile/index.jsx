@@ -27,11 +27,7 @@ const GroupTile = props => {
 
   const hoverHandler = {
     mouseover: e => {
-      if (zoomed) {
-        
-      } else {
-        e.target.style.backgroundColor = getColorVariant(tile.color, 0.7);
-      }
+      e.target.style.backgroundColor = getColorVariant(tile.color, 0.7);
     },
     mouseout: e => {
       e.target.style.backgroundColor = tile.color;
