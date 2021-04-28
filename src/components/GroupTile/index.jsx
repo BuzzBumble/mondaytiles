@@ -8,6 +8,8 @@ import ItemTile from 'components/ItemTile';
 import GroupTileHeader from 'components/GroupTileHeader';
 import Tile from 'components/Tile';
 
+import { getColorVariant } from 'helpers/colors';
+
 // GroupTile component
 // Container for a group of tiles within a TileMap
 const GroupTile = props => {
@@ -28,7 +30,7 @@ const GroupTile = props => {
       if (zoomed) {
         
       } else {
-        e.target.style.opacity = 0.8;
+        e.target.style.backgroundColor = getColorVariant(tile.color, 0.7);
       }
     },
     mouseout: e => {
@@ -70,6 +72,7 @@ const GroupTile = props => {
       >
         <GroupTileHeader
           name={tile.name}
+          value={tile.value}
           onClick={() => setZoomed(false)}
         />
         {tiles}
