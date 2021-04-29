@@ -37,6 +37,7 @@ const GroupTile = props => {
             key={child.id}
             tile={child}
             groupStyle={props.groupStyle}
+            zoomGroup={props.zoomGroup}
           />
         );
       } else {
@@ -60,8 +61,9 @@ const GroupTile = props => {
         style={{ ...style, ...props.groupStyle }}
       >
         <GroupTileHeader
-          name={tile.name}
           onClick={() => setZoomed(false)}
+          zoomGroup={props.zoomGroup}
+          tile={props.tile}
         />
         {tiles}
       </div>
@@ -79,11 +81,6 @@ const GroupTile = props => {
       />
     );
   }
-};
-
-GroupTile.propTypes = {
-  tile: PropTypes.object,
-  groupStyle: PropTypes.object,
 };
 
 export default GroupTile;

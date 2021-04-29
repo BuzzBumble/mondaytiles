@@ -1,18 +1,20 @@
 import './GroupTileHeader.css';
-import PropTypes from 'prop-types';
+
+import FullScreenIcon from 'monday-ui-react-core/dist/icons/Fullscreen';
+import FullScreenCloseIcon from 'monday-ui-react-core/dist/icons/FullscreenClose';
 
 // GroupTileHeader component
 // Header for a zoomed/expanded GroupTile
 const GroupTileHeader = props => {
   return (
-    <div className="grouptile-header paragraph" onClick={props.onClick}>
-      {props.name}
+    <div
+      className="grouptile-header paragraph"
+      onClick={props.onClick}
+    >
+      <p className="grouptile-label">{props.name}</p>
+      <FullScreenIcon onClick={() => props.zoomGroup(props.tile)} />
     </div>
   );
 };
 
 export default GroupTileHeader;
-
-GroupTileHeader.propTypes = {
-  name: PropTypes.string.isRequired,
-};

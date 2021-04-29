@@ -14,6 +14,8 @@ import { newTileTree } from 'helpers/tileMap';
 import GroupTile from 'components/GroupTile';
 import Spinner from 'components/Spinner';
 import _ from 'lodash';
+import Rectangle from 'classes/Rectangle';
+import DataTile from 'classes/DataTile';
 
 // TileMap Component
 // Container component for rendering tiles within
@@ -23,6 +25,7 @@ const TileMap = () => {
   const board = useContext(BoardContext);
   const settings = useContext(SettingsContext);
   const [tileData, setTileData] = useState(undefined);
+  const [zoomedTile, setZoomedTile] = useState(undefined);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -84,6 +87,18 @@ const TileMap = () => {
     };
   }, [resize]);
 
+  const zoomGroup = useCallback(
+    groupTile => {
+      const newTile = groupTile.createRootCopy(
+        windowSize.width,
+        windowSize.height,
+      );
+      newTile.calcRects(tilePadding);
+      setZoomedTile(newTile);
+    },
+    [windowSize, tilePadding],
+  );
+
   useEffect(() => {
     if (Object.keys(board).length > 0) {
       const tree = newTileTree(
@@ -116,6 +131,7 @@ const TileMap = () => {
           key={tile.id}
           tile={tile}
           groupStyle={groupBorder}
+          zoomGroup={zoomGroup}
         />
       );
     });
@@ -123,6 +139,15 @@ const TileMap = () => {
       <div className="tilemap" id="tilemap-container">
         {loading ? <Spinner /> : ''}
         {tiles}
+        {zoomedTile === undefined ? (
+          ''
+        ) : (
+          <GroupTile
+            key={zoomedTile.id + '-fullscreen'}
+            tile={zoomedTile}
+            groupStyle={groupBorder}
+          />
+        )}
       </div>
     );
   } else {
