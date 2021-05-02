@@ -4,6 +4,7 @@
   border-radius: 30px;
   overflow: hidden;
   transform-origin: center;
+  margin-left: 10px;
 }
 
 .counter-text {
@@ -14,5 +15,5 @@
 }
 
 .grouptile-counter {
-  padding: 10px;
+  padding: 1px;
 }
