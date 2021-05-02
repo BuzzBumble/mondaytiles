@@ -72,6 +72,7 @@ const GroupTile = props => {
     return (
       <div className="grouptile" id={props.id} style={zoomedStyle}>
         <GroupTileHeader
+          counterColor={tile.color}
           onClick={() => setZoomed(false)}
           zoomGroup={props.zoomGroup}
           tile={props.tile}
