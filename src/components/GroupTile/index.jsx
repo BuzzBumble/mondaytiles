@@ -1,5 +1,4 @@
 import './GroupTile.css';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import { shortName } from 'helpers/util';
@@ -16,7 +15,7 @@ const GroupTile = props => {
   const [zoomed, setZoomed] = useState(false);
   const tile = props.tile;
 
-  const style = {
+  let style = {
     left: tile.rect.x1,
     top: tile.rect.y1,
     width: tile.rect.getWidth(),
@@ -25,9 +24,17 @@ const GroupTile = props => {
     borderColor: tile.color,
   };
 
+  let zoomedStyle = {
+    ...style,
+    ...props.groupStyle,
+  };
+
   const hoverHandler = {
     mouseover: e => {
-      e.target.style.backgroundColor = getColorVariant(tile.color, 0.7);
+      e.target.style.backgroundColor = getColorVariant(
+        tile.color,
+        0.7,
+      );
     },
     mouseout: e => {
       e.target.style.backgroundColor = tile.color;
@@ -44,6 +51,8 @@ const GroupTile = props => {
             key={child.id}
             tile={child}
             groupStyle={props.groupStyle}
+            zoomGroup={props.zoomGroup}
+            isFullscreen={false}
           />
         );
       } else {
@@ -61,15 +70,12 @@ const GroupTile = props => {
       }
     });
     return (
-      <div
-        className="grouptile"
-        id={props.id}
-        style={{ ...style, ...props.groupStyle }}
-      >
+      <div className="grouptile" id={props.id} style={zoomedStyle}>
         <GroupTileHeader
-          name={tile.name}
-          value={tile.value}
           onClick={() => setZoomed(false)}
+          zoomGroup={props.zoomGroup}
+          tile={props.tile}
+          isFullscreen={props.isFullscreen}
         />
         {tiles}
       </div>
@@ -87,11 +93,6 @@ const GroupTile = props => {
       />
     );
   }
-};
-
-GroupTile.propTypes = {
-  tile: PropTypes.object,
-  groupStyle: PropTypes.object,
 };
 
 export default GroupTile;

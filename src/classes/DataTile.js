@@ -117,6 +117,36 @@ export default class DataTile {
     return this.value;
   }
 
+  createRootCopy(width, height) {
+    const newTile = new DataTile(this.id, this.name, this.value);
+    newTile.rect = new Rectangle(0, 0, width, height);
+    newTile.displayRect = newTile.rect.getCopy();
+    newTile.fullValue = this.fullValue;
+    newTile.color = this.color;
+    newTile.url = this.url;
+    for (let child of this.children) {
+      newTile.children.push(child.getCopy());
+    }
+
+    return newTile;
+  }
+
+  getCopy() {
+    const newTile = new DataTile(this.id, this.name, this.value);
+    newTile.weight = this.weight;
+    newTile.fullValue = this.fullValue;
+    newTile.rect = this.rect.getCopy();
+    newTile.displayRect = this.displayRect.getCopy();
+    newTile.color = this.color;
+    newTile.url = this.url;
+
+    for (let child of this.children) {
+      newTile.children.push(child.getCopy());
+    }
+
+    return newTile;
+  }
+
   calcChildrenColors() {
     if (this.children.length < 1) {
       return;

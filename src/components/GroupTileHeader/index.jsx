@@ -1,26 +1,36 @@
 import './GroupTileHeader.css';
-import PropTypes from 'prop-types';
 import Counter from 'monday-ui-react-core/dist/Counter';
+
+import FullScreenIcon from 'monday-ui-react-core/dist/icons/Fullscreen';
+import FullScreenCloseIcon from 'monday-ui-react-core/dist/icons/FullscreenClose';
 
 // GroupTileHeader component
 // Header for a zoomed/expanded GroupTile
 const GroupTileHeader = props => {
   return (
-    <div className="grouptile-header paragraph-bold" onClick={props.onClick}>
-      {props.name}
-      <span className="grouptile-counter">
-        <Counter
-          count={props.value}
-          size={Counter.sizes.SMALL}
-          color={Counter.colors.DARK}
+    <div
+      className="grouptile-header paragraph-bold"
+      onClick={props.onClick}
+    >
+      <p className="grouptile-label">
+        {props.tile.name}
+        <span className="grouptile-counter">
+          <Counter
+            count={props.tile.value}
+            size={Counter.sizes.SMALL}
+            color={Counter.colors.DARK}
+          />
+        </span>
+      </p>
+      {props.isFullscreen ? (
+        <FullScreenCloseIcon
+          onClick={() => props.zoomGroup(undefined)}
         />
-      </span>
+      ) : (
+        <FullScreenIcon onClick={() => props.zoomGroup(props.tile)} />
+      )}
     </div>
   );
 };
 
 export default GroupTileHeader;
-
-GroupTileHeader.propTypes = {
-  name: PropTypes.string.isRequired,
-};

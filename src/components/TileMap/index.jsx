@@ -8,11 +8,11 @@ import {
 } from 'react';
 import { SettingsContext } from 'contexts/settingsContext';
 import { BoardContext } from 'contexts/boardsContext';
-import Loader from 'monday-ui-react-core/dist/Loader';
 
 import { newTileTree } from 'helpers/tileMap';
 
 import GroupTile from 'components/GroupTile';
+import Spinner from 'components/Spinner';
 import _ from 'lodash';
 
 // TileMap Component
@@ -23,6 +23,7 @@ const TileMap = () => {
   const board = useContext(BoardContext);
   const settings = useContext(SettingsContext);
   const [tileData, setTileData] = useState(undefined);
+  const [zoomedTile, setZoomedTile] = useState(undefined);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -58,7 +59,10 @@ const TileMap = () => {
         groupBorder['borderBottomWidth'] +
         groupBorder['borderTopWidth'] +
         groupPadding.bottom,
-      left: groupPadding.left,
+      left:
+        groupPadding.left +
+        groupBorder['borderLeftWidth'] +
+        groupBorder['borderRightWidth'],
     };
   }, [groupBorder, groupPadding]);
 
@@ -84,6 +88,23 @@ const TileMap = () => {
     };
   }, [resize]);
 
+  const zoomGroup = useCallback(
+    groupTile => {
+      if (groupTile === undefined) {
+        setZoomedTile(undefined);
+        return;
+      }
+      const newTile = groupTile.createRootCopy(
+        windowSize.width,
+        windowSize.height,
+      );
+      newTile.displayRect.addPadding(tilePadding);
+      newTile.calcRects(tilePadding);
+      setZoomedTile(newTile);
+    },
+    [windowSize, tilePadding],
+  );
+
   useEffect(() => {
     if (Object.keys(board).length > 0) {
       const tree = newTileTree(
@@ -106,6 +127,15 @@ const TileMap = () => {
       td.calcRects(tilePadding);
       return td;
     });
+
+    setZoomedTile(zt => {
+      if (zt === undefined) return;
+      zt.resize(windowSize.width, windowSize.height);
+      zt.displayRect = zt.rect.getCopy();
+      zt.displayRect.addPadding(tilePadding);
+      zt.calcRects(tilePadding);
+      return zt;
+    });
     setLoading(false);
   }, [windowSize, tilePadding]);
 
@@ -116,32 +146,31 @@ const TileMap = () => {
           key={tile.id}
           tile={tile}
           groupStyle={groupBorder}
+          zoomGroup={zoomGroup}
+          isFullscreen={false}
         />
       );
     });
     return (
       <div className="tilemap" id="tilemap-container">
-        {loading ? (
-          <div className="cover-screen">
-            <div className="spinner-container">
-              <Loader />
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        {loading ? <Spinner /> : ''}
         {tiles}
+        {zoomedTile === undefined ? (
+          ''
+        ) : (
+          <GroupTile
+            key={zoomedTile.id + '-fullscreen'}
+            tile={zoomedTile}
+            groupStyle={groupBorder}
+            zoomGroup={zoomGroup}
+            isFullscreen={true}
+          />
+        )}
       </div>
     );
   } else {
     if (loading) {
-      return (
-        <div className="cover-screen">
-          <div className="spinner-container">
-            <Loader />
-          </div>
-        </div>
-      );
+      return <Spinner />;
     } else {
       return <div>No Items</div>;
     }

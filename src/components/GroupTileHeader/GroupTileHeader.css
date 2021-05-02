@@ -5,8 +5,18 @@
     color: white;
     width: 100%;
     cursor: pointer;
+    box-sizing: border-box;
+    display:flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .grouptile-counter {
     padding: 10px;
+    width: 100%;
+}
+
+.grouptile-label {
+    margin: 0;
 }
