@@ -32,10 +32,10 @@ const TileMap = () => {
 
   const groupBorder = useMemo(() => {
     return {
-      borderTopWidth: 10,
-      borderRightWidth: 10,
-      borderBottomWidth: 10,
-      borderLeftWidth: 10,
+      borderTopWidth: 5,
+      borderRightWidth: 5,
+      borderBottomWidth: 5,
+      borderLeftWidth: 5,
     };
   }, []);
 

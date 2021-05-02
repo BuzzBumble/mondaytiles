@@ -10,11 +10,8 @@
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-}
-
-.grouptile-counter {
-    padding: 10px;
-    width: 100%;
+    padding-top: 5px;
+    white-space: nowrap;
 }
 
 .grouptile-label {
