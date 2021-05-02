@@ -119,7 +119,6 @@ export default class DataTile {
 
   createRootCopy(width, height) {
     const newTile = new DataTile(this.id, this.name, this.value);
-    newTile.weight = 1;
     newTile.rect = new Rectangle(0, 0, width, height);
     newTile.displayRect = newTile.rect.getCopy();
     newTile.fullValue = this.fullValue;

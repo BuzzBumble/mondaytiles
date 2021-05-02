@@ -93,6 +93,7 @@ const TileMap = () => {
         windowSize.width,
         windowSize.height,
       );
+      newTile.displayRect.addPadding(tilePadding);
       newTile.calcRects(tilePadding);
       setZoomedTile(newTile);
     },
@@ -132,6 +133,7 @@ const TileMap = () => {
           tile={tile}
           groupStyle={groupBorder}
           zoomGroup={zoomGroup}
+          isFullscreen={false}
         />
       );
     });
@@ -146,6 +148,8 @@ const TileMap = () => {
             key={zoomedTile.id + '-fullscreen'}
             tile={zoomedTile}
             groupStyle={groupBorder}
+            zoomGroup={zoomGroup}
+            isFullscreen={true}
           />
         )}
       </div>
