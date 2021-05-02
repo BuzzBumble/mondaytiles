@@ -14,8 +14,6 @@ import { newTileTree } from 'helpers/tileMap';
 import GroupTile from 'components/GroupTile';
 import Spinner from 'components/Spinner';
 import _ from 'lodash';
-import Rectangle from 'classes/Rectangle';
-import DataTile from 'classes/DataTile';
 
 // TileMap Component
 // Container component for rendering tiles within
@@ -61,7 +59,10 @@ const TileMap = () => {
         groupBorder['borderBottomWidth'] +
         groupBorder['borderTopWidth'] +
         groupPadding.bottom,
-      left: groupPadding.left,
+      left:
+        groupPadding.left +
+        groupBorder['borderLeftWidth'] +
+        groupBorder['borderRightWidth'],
     };
   }, [groupBorder, groupPadding]);
 
@@ -89,6 +90,10 @@ const TileMap = () => {
 
   const zoomGroup = useCallback(
     groupTile => {
+      if (groupTile === undefined) {
+        setZoomedTile(undefined);
+        return;
+      }
       const newTile = groupTile.createRootCopy(
         windowSize.width,
         windowSize.height,
@@ -121,6 +126,15 @@ const TileMap = () => {
       td.resize(windowSize.width, windowSize.height);
       td.calcRects(tilePadding);
       return td;
+    });
+
+    setZoomedTile(zt => {
+      if (zt === undefined) return;
+      zt.resize(windowSize.width, windowSize.height);
+      zt.displayRect = zt.rect.getCopy();
+      zt.displayRect.addPadding(tilePadding);
+      zt.calcRects(tilePadding);
+      return zt;
     });
     setLoading(false);
   }, [windowSize, tilePadding]);

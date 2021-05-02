@@ -65,6 +65,7 @@ const GroupTile = props => {
           onClick={() => setZoomed(false)}
           zoomGroup={props.zoomGroup}
           tile={props.tile}
+          isFullscreen={props.isFullscreen}
         />
         {tiles}
       </div>

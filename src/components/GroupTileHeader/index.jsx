@@ -11,8 +11,14 @@ const GroupTileHeader = props => {
       className="grouptile-header paragraph"
       onClick={props.onClick}
     >
-      <p className="grouptile-label">{props.name}</p>
-      <FullScreenIcon onClick={() => props.zoomGroup(props.tile)} />
+      <p className="grouptile-label">{props.tile.name}</p>
+      {props.isFullscreen ? (
+        <FullScreenCloseIcon
+          onClick={() => props.zoomGroup(undefined)}
+        />
+      ) : (
+        <FullScreenIcon onClick={() => props.zoomGroup(props.tile)} />
+      )}
     </div>
   );
 };
